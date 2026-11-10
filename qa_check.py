@@ -80,6 +80,8 @@ if city_js.is_file():
 
 # Ensure homepage FAQ structured data stays aligned with visible questions.
 homepage = pages.get("index.html", "")
+# Remove structured-data scripts before checking that FAQ answers are actually visible.
+visible_homepage = re.sub(r'<script\\b[^>]*>.*?</script>', '', homepage, flags=re.I | re.S)
 for schema_match in re.finditer(r'<script\s+type="application/ld\+json">([\s\S]*?)</script>', homepage, re.I):
     try:
         schema_data = json.loads(schema_match.group(1))
@@ -92,8 +94,8 @@ for schema_match in re.finditer(r'<script\s+type="application/ld\+json">([\s\S]*
         for question in item.get("mainEntity", []):
             name = question.get("name", "")
             answer = question.get("acceptedAnswer", {}).get("text", "")
-            check(bool(name) and name in homepage, f"Homepage FAQ schema question is not visible: {name}")
-            check(bool(answer) and answer in homepage, f"Homepage FAQ schema answer is out of sync with visible content: {name}")
+            check(bool(name) and name in visible_homepage, f"Homepage FAQ schema question is not visible: {name}")
+            check(bool(answer) and answer in visible_homepage, f"Homepage FAQ schema answer is out of sync with visible content: {name}")
 
 # Keep search snippets distinct and prevent accidental duplicate page titles.
 seo_titles = []
