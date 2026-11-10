@@ -65,11 +65,11 @@ for filename, source in pages.items():
     if filename in ("privacy.html", "404.html"):
         continue
     title_match = re.search(r"<title>(.*?)</title>", source, re.I | re.S)
-    description_match = re.search(r'<meta\\s+name="description"\\s+content="([^"]+)"', source, re.I)
+    description_match = re.search(r'<meta\s+name="description"\s+content="([^"]+)"', source, re.I)
     check(bool(title_match), f"{filename}: page title missing")
     check(bool(description_match), f"{filename}: meta description missing")
     if title_match:
-        seo_titles.append((filename, re.sub(r"\\s+", " ", title_match.group(1)).strip()))
+        seo_titles.append((filename, re.sub(r"\s+", " ", title_match.group(1)).strip()))
     if description_match:
         seo_descriptions.append((filename, description_match.group(1).strip()))
 check(len({value for _, value in seo_titles}) == len(seo_titles), "Indexable pages must have unique titles")
@@ -107,7 +107,7 @@ if sitemap.is_file():
                 path = url.split("/kurier-start/", 1)[1]
                 target = ROOT / (path or "index.html")
                 check(target.is_file(), f"Sitemap points to missing file: {url}")
-                canonical = re.search(r'<link\\s+rel="canonical"\\s+href="([^"]+)"', pages.get(path or "index.html", ""), re.I)
+                canonical = re.search(r'<link\s+rel="canonical"\s+href="([^"]+)"', pages.get(path or "index.html", ""), re.I)
                 check(bool(canonical) and canonical.group(1) == url, f"Sitemap URL and canonical URL differ: {url}")
         expected_sitemap = {
             "https://76kovka76-hub.github.io/kurier-start/",
