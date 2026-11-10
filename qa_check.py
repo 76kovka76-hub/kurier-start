@@ -58,6 +58,8 @@ for filename, source in pages.items():
         check('name="robots" content="noindex' not in source, f"{filename}: unexpected noindex")
         check('rel="canonical"' in source, f"{filename}: canonical missing")
         check('property="og:url"' in source, f"{filename}: Open Graph URL missing")
+        if filename in ("guide.html", "auto.html", "bike.html", "calculator.html"):
+            check('"@type": "BreadcrumbList"' in source and '"itemListElement"' in source, f"{filename}: breadcrumb structured data missing")
         check('name="twitter:card"' in source and 'name="twitter:title"' in source and 'name="twitter:description"' in source, f"{filename}: social preview metadata incomplete")
     check('src="city.js' in source, f"{filename}: city.js not included")
     check('class="skip-link"' in source and ('<main id="main-content"' in source or '<main id="top"' in source), f"{filename}: keyboard skip navigation missing")
