@@ -1,2 +1,4 @@
 User-agent: *
 Allow: /
+
+Sitemap: https://76kovka76-hub.github.io/kurier-start/sitemap.xml
