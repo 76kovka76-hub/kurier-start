@@ -78,7 +78,7 @@ if city_js.is_file():
 
 # Ensure homepage FAQ structured data stays aligned with visible questions.
 homepage = pages.get("index.html", "")
-for schema_match in re.finditer(r'<script\\s+type="application/ld\\+json">([\\s\\S]*?)</script>', homepage, re.I):
+for schema_match in re.finditer(r'<script\s+type="application/ld\+json">([\s\S]*?)</script>', homepage, re.I):
     try:
         schema_data = json.loads(schema_match.group(1))
     except json.JSONDecodeError:
