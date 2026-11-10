@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="Бесплатный калькулятор дохода автокурьера: оцени выплаты после топлива, обслуживания автомобиля, парковки и других расходов.">
+<meta name="description" content="Бесплатный калькулятор дохода автокурьера: оцени остаток после топлива, обслуживания, парковки и налогов, а также примерный чистый доход за час.">
 <meta name="robots" content="index,follow">
 <link rel="canonical" href="https://76kovka76-hub.github.io/kurier-start/calculator.html">
 <meta property="og:type" content="website"><meta property="og:locale" content="ru_RU">
@@ -29,7 +29,8 @@
 <div class="calc-card">
 <h2 style="margin-top:0">Твои данные за выбранный период</h2>
 <div class="calc-grid">
-<div class="calc-field"><label for="income">Ожидаемые выплаты, ₽</label><input id="income" type="number" min="0" step="100" value="80000"></div>
+<div class="calc-field"><label for="income">Ожидаемые выплаты за период, ₽</label><input id="income" type="number" min="0" step="100" value="80000"></div>
+<div class="calc-field"><label for="hours">Часы работы за этот период</label><input id="hours" type="number" min="0" step="1" value="160"></div>
 <div class="calc-field"><label for="distance">Пробег по работе, км</label><input id="distance" type="number" min="0" step="10" value="1500"></div>
 <div class="calc-field"><label for="consumption">Расход топлива, л на 100 км</label><input id="consumption" type="number" min="0" step=".1" value="9"></div>
 <div class="calc-field"><label for="fuel">Цена топлива, ₽/л</label><input id="fuel" type="number" min="0" step=".1" value="60"></div>
@@ -37,7 +38,7 @@
 <div class="calc-field"><label for="other">Парковка, связь и прочие расходы, ₽</label><input id="other" type="number" min="0" step="100" value="2000"></div>
 <div class="calc-field"><label for="tax">Налоги и прочие отчисления, ₽</label><input id="tax" type="number" min="0" step="100" value="0"></div>
 </div>
-<div class="calc-result" aria-live="polite"><span>Ориентировочно останется</span><strong id="net">—</strong><p id="detail" class="calc-note"></p></div>
+<div class="calc-result" aria-live="polite"><span>Ориентировочно останется</span><strong id="net">—</strong><p id="hourly" class="calc-note" style="font-weight:700"></p><p id="detail" class="calc-note"></p></div>
 <p class="calc-note">Это упрощённая оценка, а не прогноз или гарантия заработка. Укажи свои реальные цифры. Не забудь учитывать амортизацию, страховку, мойку, платные дороги, простой и другие расходы, если они применимы.</p>
 </div>
 <section class="direction-card" style="margin:20px 0;min-height:0"><h2 style="margin:0 0 8px">Как пользоваться расчётом</h2><p>Выплаты — сумма до вычета указанных расходов. Пробег — километры именно по работе. Расход топлива возьми из реальных наблюдений за своим автомобилем. Резерв на обслуживание поможет учесть масло, шины, тормоза и износ.</p><p>Сравнивай результат за одинаковый период и уточняй у работодателя или партнёра, какие расходы компенсируются отдельно.</p></section>
@@ -46,7 +47,7 @@
 <footer class="site-footer"><p class="disclaimer">Независимая информационная площадка. Не является официальным сайтом или представительством ВкусВилл.</p></footer>
 <script>
 (function(){
- const ids=["income","distance","consumption","fuel","service","other","tax"];
+ const ids=["income","hours","distance","consumption","fuel","service","other","tax"];
  const fmt=new Intl.NumberFormat("ru-RU",{maximumFractionDigits:0});
  function update(){
   const v=Object.fromEntries(ids.map(id=>[id,Math.max(0,Number(document.getElementById(id).value)||0)]));
@@ -55,6 +56,7 @@
   const total=fuelCost+serviceCost+v.other+v.tax;
   const net=v.income-total;
   document.getElementById("net").textContent=fmt.format(net)+" ₽";
+  document.getElementById("hourly").textContent=v.hours>0?"Примерно "+fmt.format(net/v.hours)+" ₽ чистыми за час":"Укажи количество часов, чтобы рассчитать доход за час.";
   document.getElementById("detail").textContent="Топливо: "+fmt.format(fuelCost)+" ₽ · обслуживание: "+fmt.format(serviceCost)+" ₽ · прочие расходы и отчисления: "+fmt.format(v.other+v.tax)+" ₽ · всего расходов: "+fmt.format(total)+" ₽";
  }
  ids.forEach(id=>document.getElementById(id).addEventListener("input",update));update();
