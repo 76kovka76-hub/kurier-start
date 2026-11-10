@@ -44,6 +44,7 @@ check('href="cities.html"' in home and 'href="earnings.html"' in home, "Homepage
 check("fonts.googleapis.com" not in home and "fonts.googleapis.com" not in calculator, "External font stylesheet should not block rendering")
 check("не является официальным сайтом" in home.lower(), "Homepage disclaimer missing")
 check(all('href="https://vkusvill.ru/' not in source for source in pages.values()) and "vkusvill.ru" not in city_js.read_text(encoding="utf-8"), "Unexpected outbound links to employer site")
+check("city-personal" not in city_js.read_text(encoding="utf-8") and "Проверьте актуальные вакансии курьеров" not in city_js.read_text(encoding="utf-8"), "Obsolete city vacancy card must stay removed")
 check("window.location" not in home and "location.href" not in home and "http-equiv" not in home.lower(), "Homepage must not redirect visitors")
 check("Официальные вакансии</div>" not in home, "Homepage contains an orphaned employer link label")
 check("https://wa.me/79201461682" in home and "https://t.me/daaaggg1" in home, "Contact links missing")
