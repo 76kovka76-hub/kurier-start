@@ -22,11 +22,11 @@ calculator = pages.get("calculator.html", "")
 css_text = (ROOT / "styles.css").read_text(encoding="utf-8")
 check('id="hours"' in calculator and 'id="hourly"' in calculator and 'id="days"' in calculator, "Calculator hourly and daily estimate fields missing")
 check("net/v.hours" in calculator, "Calculator hourly net calculation missing")
-check("[fuelCost,serviceCost,total,net].every(Number.isFinite)" in calculator and "Number.isFinite(hourlyNet)" in calculator and "числовой диапазон" in calculator, "Calculator must guard against numeric overflow")
+check("fuelCost,serviceCost,total,net,daily,monthEstimate" in calculator and "Number.isFinite(hourlyNet)" in calculator and "числовой диапазон" in calculator, "Calculator must guard against numeric overflow")
 check('id="calc-status"' in calculator and "Расходы превышают выплаты" in calculator, "Calculator negative-balance warning missing")
 check(calculator.count("required>") >= 9 and 'aria-invalid' in calculator and "Расчёт временно недоступен" in calculator, "Calculator must reject blank and invalid inputs")
 check('id="mode"' in calculator and 'option value="bike"' in calculator and 'mode==="car"' in calculator, "Calculator must support car and bicycle modes")
-check('id="month-estimate"' in calculator and "daily*30" in calculator and "Number.isFinite(monthEstimate)" in calculator, "Calculator monthly equivalent estimate missing or unguarded")
+check('id="month-estimate"' in calculator and "daily*30" in calculator and "monthEstimate].every(Number.isFinite)" in calculator, "Calculator monthly equivalent estimate missing or unguarded")
 check('input[aria-invalid="true"]' in css_text, "Invalid calculator inputs must be visually highlighted")
 city_js = ROOT / "city.js"
 
