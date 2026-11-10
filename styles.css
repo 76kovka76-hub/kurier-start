@@ -111,3 +111,107 @@ h1 em,h2 em{font-family:Georgia,serif;font-weight:400;color:var(--green);letter-
 .city-personal p{margin:3px 0 6px;color:var(--muted);font-size:11px;line-height:1.6}
 .city-personal a{font-size:11px;font-weight:750;color:var(--green);text-decoration:none}
 @media(max-width:620px){.city-personal{margin:8px 12px 0;padding:11px 12px}}
+
+/* Modern visual refresh */
+:root{
+ --green:#16734d;--green-dark:#104b35;--ink:#17251d;--muted:#68776d;
+ --line:#e4ebe4;--paper:#f5f8f4;--white:#fff;--soft:#eaf3eb;
+ --shadow:0 18px 48px rgba(22,58,35,.08);
+}
+body{background:radial-gradient(ellipse at 12% 0%,#eaf3e9 0,transparent 34%),linear-gradient(180deg,#f8faf7 0%,#f2f6f1 100%);color:var(--ink);font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif}
+.site-header{height:74px;background:rgba(250,252,249,.86);border-bottom:1px solid rgba(219,230,219,.8);box-shadow:0 4px 24px rgba(27,55,34,.035)}
+.header-inner{max-width:1220px}
+.brand{font-size:14px;letter-spacing:1.55px}
+.brand-mark{width:36px;height:36px;border-radius:12px;box-shadow:0 5px 12px #16734d30}
+.main-nav{gap:clamp(12px,1.8vw,25px)}
+.main-nav a,.header-contact{font-size:12px;transition:color .2s,border-color .2s,background .2s}
+.main-nav a:hover{color:var(--green)}
+.header-contact{border-radius:999px;padding:10px 17px;background:#f3f8f3}
+.header-contact:hover{background:#e7f1e8;border-color:#b8d1bd}
+.page{max-width:1220px}
+.hero{padding:76px 0 56px;gap:clamp(34px,5vw,72px)}
+.eyebrow{font-size:10px;letter-spacing:1.65px}
+.hero h1{font-size:clamp(42px,5.2vw,66px);line-height:1.04;letter-spacing:-3.2px;margin:22px 0 18px}
+h1 em,h2 em{color:#258357}
+.hero-lead{font-size:16px;line-height:1.8;max-width:600px}
+.button{border-radius:999px;padding:14px 20px;font-size:12px}
+.button-primary{background:linear-gradient(135deg,#218456,#126342);box-shadow:0 9px 22px #16734d2b}
+.button-primary:hover{background:linear-gradient(135deg,#176f49,#104b35);box-shadow:0 12px 26px #16734d35}
+.text-link{padding:8px 0}
+.contact-panel{border:1px solid #e4ece4;border-radius:22px;padding:27px 27px 21px;box-shadow:var(--shadow);background:rgba(255,255,255,.92)}
+.panel-icon,.action-icon{border-radius:11px}
+.contact-panel h2{font-size:27px;letter-spacing:-1px}
+.contact-panel>p{font-size:13px;line-height:1.7}
+.contact-action{border-radius:12px;padding:12px;margin-top:9px}
+.contact-action:hover{transform:translateY(-1px);box-shadow:0 6px 18px #183d2410}
+.contact-action strong{font-size:13px}
+.panel-foot{font-size:10px}
+.quick-facts{background:linear-gradient(115deg,#edf5ed,#e8f1e9);border:1px solid #dfeade;border-radius:18px;padding:19px 23px;margin-bottom:76px;box-shadow:0 10px 30px #173a2008}
+.fact{padding-left:23px}
+.fact>span{font-size:11px}
+.fact strong{font-size:12px}
+.fact small{font-size:10px}
+.content-section{padding-bottom:72px}
+.section-heading{margin-bottom:27px}
+.section-heading h2,.info-title h2,.faq-section h2{font-size:clamp(31px,3.2vw,41px);letter-spacing:-1.9px}
+.section-heading>p{font-size:13px}
+.direction-grid{gap:17px}
+.direction-card{border:1px solid #e4ebe4;border-radius:18px;padding:23px;min-height:240px;box-shadow:0 6px 20px #173a2005;transition:transform .22s,box-shadow .22s,border-color .22s}
+.direction-card:hover{transform:translateY(-4px);box-shadow:0 16px 36px #173a2012;border-color:#cbdccb}
+.direction-card-soft{background:linear-gradient(145deg,#edf5ed,#f7faf6)}
+.direction-symbol{width:39px;height:39px;border-radius:12px;background:#e9f3e9;font-size:21px}
+.direction-card h3{font-size:19px;letter-spacing:-.55px}
+.direction-card p{font-size:12px;line-height:1.75}
+.direction-card>a{font-size:11px;padding-top:13px}
+.info-band{border-radius:20px;padding:36px 38px;background:linear-gradient(125deg,#eaf3eb,#f2f7f1);border:1px solid #dfe9df;gap:54px;margin-bottom:74px}
+.info-title h2{font-size:34px}
+.info-list{gap:15px}
+.info-list>div{padding-bottom:14px}
+.info-list p{font-size:12px;line-height:1.75}
+.info-list strong{font-size:13px}
+.faq-section{max-width:850px;padding-bottom:70px}
+.faq-list{border-top-color:#dfe7df}
+.faq-list details{padding:17px 4px;border-bottom-color:#dfe7df}
+.faq-list summary{font-size:13px}
+.faq-list details p{font-size:12px;line-height:1.8}
+.bottom-cta{border-radius:20px;padding:30px 34px;margin-bottom:52px;background:radial-gradient(circle at 85% 15%,#287d55 0,transparent 36%),linear-gradient(115deg,#124b35,#176343);box-shadow:0 16px 38px #104b3524}
+.bottom-cta h2{font-size:24px}
+.bottom-cta p{font-size:12px}
+.button-light{border-radius:999px;padding:14px 20px}
+.site-footer{padding-top:34px;padding-bottom:30px;background:#122b20}
+.footer-links{gap:13px 20px}
+.footer-links a{font-size:11px}
+.disclaimer{font-size:10px;line-height:1.8}
+.footer-bottom{font-size:10px}
+.city-bar,.city-personal{max-width:1168px;box-shadow:0 8px 22px #173a2007}
+.city-bar{border-radius:14px;background:rgba(235,245,235,.92);padding:14px 20px}
+.city-personal{border:1px solid #e3ebe2;border-left:4px solid var(--green);border-radius:14px;background:rgba(255,255,255,.9);padding:15px 20px}
+.city-personal p{font-size:12px;line-height:1.7}
+.city-personal a{font-size:12px}
+.city-change,.city-edit button{border-radius:999px;padding:10px 15px;transition:background .2s}
+.city-change:hover,.city-edit button:hover{background:#edf5ed}
+input,select,textarea{border-radius:10px}
+@media(max-width:800px){
+ .hero{padding:55px 0 42px}
+ .quick-facts{margin-bottom:55px}
+ .info-band{padding:27px;gap:28px}
+}
+@media(max-width:620px){
+ .site-header{height:62px}
+ .brand-mark{width:33px;height:33px}
+ .hero{padding:39px 0 30px;gap:25px}
+ .hero h1{font-size:clamp(38px,10vw,46px);letter-spacing:-2.2px;line-height:1.06}
+ .hero-lead{font-size:14px;line-height:1.75}
+ .contact-panel{border-radius:18px;padding:20px}
+ .quick-facts{border-radius:15px;padding:15px;margin-bottom:48px}
+ .section-heading h2,.faq-section h2{font-size:32px}
+ .direction-grid{gap:11px}
+ .direction-card{border-radius:15px;padding:18px}
+ .info-band{border-radius:17px;padding:22px 19px;gap:17px;margin-bottom:48px}
+ .faq-section{padding-bottom:48px}
+ .faq-list details{padding:15px 2px}
+ .bottom-cta{border-radius:17px;padding:22px;margin-bottom:32px}
+ .bottom-cta h2{font-size:21px}
+ .city-bar,.city-personal{border-radius:12px}
+}
+@media(hover:none){.direction-card:hover,.contact-action:hover{transform:none}}
