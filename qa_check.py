@@ -40,6 +40,15 @@ check("ipapi.co" in privacy and "локальном хранилище" in priva
 check(city_js.is_file(), "Missing city.js")
 check((ROOT / "styles.css").is_file(), "Missing styles.css")
 check("scroll-padding-top:122px" in css_text, "Mobile anchor offset missing")
+for filename in ("guide.html", "auto.html", "bike.html", "calculator.html"):
+    source = pages.get(filename, "")
+    nav_match = re.search(r'<nav class="main-nav"[^>]*>([\\s\\S]*?)</nav>', source)
+    check(bool(nav_match), f"{filename}: primary navigation missing")
+    if nav_match:
+        nav = nav_match.group(1)
+        for target in ("index.html#directions", "guide.html", "auto.html", "bike.html", "calculator.html"):
+            check(f'href="{target}"' in nav, f"{filename}: primary navigation missing {target}")
+        check(f'href="{filename}" aria-current="page"' in nav, f"{filename}: current page is not identified in navigation")
 check("scrollbar-width:thin" in css_text and "scroll-snap-type:x proximity" in css_text, "Mobile navigation scroll affordance missing")
 check("@media(prefers-reduced-motion:reduce)" in css_text and "scroll-behavior:auto" in css_text, "Reduced-motion support missing")
 check("@import url('https://fonts.googleapis.com'" not in (ROOT / "styles.css").read_text(encoding="utf-8"), "Google Font import must not be late in CSS")
