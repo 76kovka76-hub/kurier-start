@@ -48,6 +48,9 @@ if city_js.is_file():
     check("https://ipapi.co/json/" in js, "IP city lookup missing")
     check("kurierStartCity" in js, "Manual city persistence missing")
     check("city-personal-text" in js, "City-specific page content missing")
+    check('aria-live="polite"' in js and 'aria-atomic="true"' in js, "City changes must be announced to assistive technology")
+    check('aria-expanded' in js and 'aria-controls="city-edit"' in js, "City selector toggle accessibility attributes missing")
+    check('changeButton.focus()' in js, "Focus is not returned after saving city")
     check("wa.me/79201461682" in js, "City-prefilled WhatsApp link missing")
 
 for filename, source in pages.items():
