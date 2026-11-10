@@ -110,13 +110,13 @@ for filename, source in pages.items():
 
 # Validate in-page and cross-page fragment links, not only file existence.
 page_ids = {
-    filename: set(re.findall(r'\\bid=["\\']([^"\\']+)["\\']', source))
+    filename: set(re.findall(r'\bid=["\']([^"\']+)["\']', source))
     for filename, source in pages.items()
 }
 for filename, source in pages.items():
-    found_ids = re.findall(r'\\bid=["\\']([^"\\']+)["\\']', source)
+    found_ids = re.findall(r'\bid=["\']([^"\']+)["\']', source)
     check(len(found_ids) == len(set(found_ids)), f"{filename}: duplicate HTML id")
-    for href in re.findall(r'<a\\b[^>]*href=["\\']([^"\\']+)["\\']', source, re.I):
+    for href in re.findall(r'<a\b[^>]*href=["\']([^"\']+)["\']', source, re.I):
         if "#" not in href or href.startswith(("https://", "http://", "mailto:", "tel:")):
             continue
         target_file, fragment = href.split("#", 1)
