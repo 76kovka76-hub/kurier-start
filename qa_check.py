@@ -76,6 +76,23 @@ if city_js.is_file():
     check("Контакт на этом сайте независимый и не подтверждает трудоустройство" in js, "City information must distinguish independent contact from hiring authority")
     check("где проверить актуальные вакансии курьеров и официальные условия" in js, "WhatsApp city message must direct users to official vacancy information")
 
+# Ensure homepage FAQ structured data stays aligned with visible questions.
+homepage = pages.get("index.html", "")
+for schema_match in re.finditer(r'<script\\s+type="application/ld\\+json">([\\s\\S]*?)</script>', homepage, re.I):
+    try:
+        schema_data = json.loads(schema_match.group(1))
+    except json.JSONDecodeError:
+        continue
+    graph = schema_data.get("@graph", []) if isinstance(schema_data, dict) else []
+    for item in graph:
+        if item.get("@type") != "FAQPage":
+            continue
+        for question in item.get("mainEntity", []):
+            name = question.get("name", "")
+            answer = question.get("acceptedAnswer", {}).get("text", "")
+            check(bool(name) and name in homepage, f"Homepage FAQ schema question is not visible: {name}")
+            check(bool(answer) and answer in homepage, f"Homepage FAQ schema answer is out of sync with visible content: {name}")
+
 # Keep search snippets distinct and prevent accidental duplicate page titles.
 seo_titles = []
 seo_descriptions = []
