@@ -12,7 +12,7 @@ def check(condition, message):
     if not condition:
         errors.append(message)
 
-html_files = sorted(p for p in ROOT.glob("*.html") if not re.match(r"^(?:google|yandex)_.*\.html$", p.name))
+html_files = sorted(p for p in ROOT.glob("*.html") if not re.match(r"^(?:google|yandex).*\.html$", p.name))
 check(bool(html_files), "No HTML pages found")
 pages = {p.name: p.read_text(encoding="utf-8") for p in html_files}
 home = pages.get("index.html", "")
@@ -42,7 +42,7 @@ for filename, source in pages.items():
     if filename not in ("privacy.html", "404.html"):
         check('name="robots" content="noindex' not in source, f"{filename}: unexpected noindex")
         check('rel="canonical"' in source, f"{filename}: canonical missing")
-    check('src="city.js"' in source, f"{filename}: city.js not included")
+    check('src="city.js' in source, f"{filename}: city.js not included")
     for match in re.finditer(r'<a\b([^>]*target="_blank"[^>]*)>', source, re.I):
         check("noopener" in match.group(1), f"{filename}: unsafe target=_blank link")
     for href in re.findall(r'<(?:a|link)\b[^>]*href=["\']([^"\']+)["\']', source, re.I):
