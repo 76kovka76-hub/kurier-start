@@ -2,20 +2,17 @@
 <html lang="ru">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<meta name="description" content="Бесплатный калькулятор для автокурьера: рассчитай примерный остаток после топлива, обслуживания, парковки и налогов, а также доход за час.">
+  <meta name="description" content="Бесплатный калькулятор для автокурьера и велокурьера: оцени остаток после транспортных и других расходов, за день, час и условные 30 дней.">
 <meta name="robots" content="index,follow">
 <link rel="canonical" href="https://76kovka76-hub.github.io/kurier-start/calculator.html">
 <meta property="og:type" content="website"><meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Калькулятор дохода автокурьера после расходов">
+<meta name="twitter:title" content="Калькулятор дохода курьера после расходов">
 <meta name="twitter:description" content="Оцени примерный остаток и доход за час с учётом топлива, обслуживания и других расходов.">
 <meta property="og:locale" content="ru_RU">
 <meta property="og:url" content="https://76kovka76-hub.github.io/kurier-start/calculator.html">
 <meta property="og:title" content="Калькулятор дохода автокурьера после расходов">
 <meta property="og:description" content="Оцени примерный остаток и доход за час с учётом топлива, обслуживания и других расходов.">
-<title>Калькулятор дохода автокурьера: расчёт после расходов</title><link rel="stylesheet" href="styles.css">
+<title>Калькулятор дохода курьера: авто и велосипед</title><link rel="stylesheet" href="styles.css">
 <style>
 .calc-card{background:#fff;border:1px solid #e5e9e3;border-radius:14px;padding:22px;margin:24px 0}
 .calc-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}
@@ -54,25 +51,27 @@
 </head>
 <body>
   <a class="skip-link" href="#main-content">Перейти к основному содержимому</a>
-<header class="site-header"><div class="header-inner"><a class="brand" href="index.html"><span class="brand-mark">К</span><span>КУРЬЕР<span class="brand-period">.</span></span></a><nav class="main-nav" aria-label="Основная навигация"><a href="index.html#directions">Направления</a><a href="index.html#faq">Вопросы</a><a href="guide.html">Памятка</a><a href="auto.html">Автокурьеру</a><a href="bike.html">Велокурьеру</a><a href="calculator.html" aria-current="page">Калькулятор</a></nav><a class="header-contact" href="index.html#contacts">Связаться ↗</a></div></header>
+<header class="site-header"><div class="header-inner"><a class="brand" href="index.html"><span class="brand-mark">К</span><span>КУРЬЕР<span class="brand-period">.</span></span></a><nav class="main-nav" aria-label="Основная навигация"><a href="index.html#directions">Направления</a><a href="index.html#faq">Вопросы</a><a href="guide.html">Памятка</a><a href="auto.html">Автокурьеру</a><a href="bike.html">Велокурьеру</a><a href="calculator.html" aria-current="page">Калькулятор</a><a href="cities.html">По городам</a><a href="earnings.html">Доход и расходы</a></nav><a class="header-contact" href="index.html#contacts">Связаться ↗</a></div></header>
 <main id="main-content" class="page" style="max-width:850px;padding-top:38px;padding-bottom:54px">
 <nav class="breadcrumbs" aria-label="Хлебные крошки"><a href="index.html">Главная</a><span aria-hidden="true">/</span><span aria-current="page">Калькулятор</span></nav>
 <p class="eyebrow"><span></span> БЕСПЛАТНЫЙ ИНСТРУМЕНТ</p>
-<h1 style="font-size:clamp(34px,5vw,48px);line-height:1.12;letter-spacing:-1.8px;margin:14px 0">Калькулятор дохода <em>автокурьера</em></h1>
-<p class="hero-lead">Введи свои предполагаемые выплаты и расходы, чтобы оценить, сколько может остаться после затрат на автомобиль. Все вычисления выполняются прямо в браузере — данные никуда не отправляются.</p>
+<h1 style="font-size:clamp(34px,5vw,48px);line-height:1.12;letter-spacing:-1.8px;margin:14px 0">Калькулятор дохода <em>курьера</em></h1>
+<p class="hero-lead">Выбери транспорт и внеси свои выплаты и расходы. Калькулятор оценит остаток за период, за час и условный эквивалент за 30 дней. Все вычисления выполняются прямо в браузере — данные никуда не отправляются.</p>
 <div class="calc-card">
 <h2 style="margin-top:0">Введи данные за выбранный период</h2>
+<div class="calc-field calc-mode"><label for="mode">Формат доставки</label><select id="mode"><option value="car">Автомобиль</option><option value="bike">Велосипед</option></select></div>
 <div class="calc-grid">
 <div class="calc-field"><label for="income">Ожидаемые выплаты за период, ₽</label><input id="income" type="number" min="0" step="100" value="80000" required></div>
 <div class="calc-field"><label for="hours">Количество часов работы за период</label><input id="hours" type="number" min="0" step="1" value="160" required></div>
 <div class="calc-field"><label for="distance">Пробег по работе, км</label><input id="distance" type="number" min="0" step="10" value="1500" required></div>
-<div class="calc-field"><label for="consumption">Расход топлива, л на 100 км</label><input id="consumption" type="number" min="0" step=".1" value="9" required></div>
-<div class="calc-field"><label for="fuel">Цена топлива, ₽/л</label><input id="fuel" type="number" min="0" step=".1" value="60" required></div>
+<div class="calc-field calc-car-field"><label for="consumption">Расход топлива, л на 100 км</label><input id="consumption" type="number" min="0" step=".1" value="9" required></div>
+<div class="calc-field calc-car-field"><label for="fuel">Цена топлива, ₽/л</label><input id="fuel" type="number" min="0" step=".1" value="60" required></div>
 <div class="calc-field"><label for="service">Расходы на обслуживание и износ, ₽/км</label><input id="service" type="number" min="0" step=".1" value="3" required></div>
 <div class="calc-field"><label for="other">Парковка, связь и прочие расходы, ₽</label><input id="other" type="number" min="0" step="100" value="2000" required></div>
 <div class="calc-field"><label for="tax">Налоги и прочие отчисления, ₽</label><input id="tax" type="number" min="0" step="100" value="0" required></div>
+<div class="calc-field"><label for="days">Количество рабочих дней за период</label><input id="days" type="number" min="1" step="1" value="20" required></div>
 </div>
-<div class="calc-result" aria-live="polite"><span>Примерный остаток после указанных расходов</span><strong id="net">—</strong><p id="hourly" class="calc-note" style="font-weight:700"></p><p id="calc-status" class="calc-status" role="status"></p><p id="detail" class="calc-note"></p></div>
+<div class="calc-result" aria-live="polite"><span>Примерный остаток после указанных расходов</span><strong id="net">—</strong><p id="hourly" class="calc-note" style="font-weight:700"></p><p id="calc-status" class="calc-status" role="status"></p><p id="detail" class="calc-note"></p><p id="period-average" class="calc-note"></p><p id="month-estimate" class="calc-note"></p></div>
 <p class="calc-note">Это упрощённая оценка, а не прогноз или гарантия заработка. Укажи свои реальные цифры. Не забудь учитывать амортизацию, страховку, мойку, платные дороги, простой и другие расходы, если они применимы.</p>
 </div>
 <section class="direction-card" style="margin:20px 0;min-height:0"><h2 style="margin:0 0 8px">Как пользоваться расчётом</h2><p>В поле «Выплаты» укажи сумму до вычета расходов. В поле «Пробег» — километры, пройденные по работе. Расход топлива возьми из реальных наблюдений за своим автомобилем. Расходы на обслуживание и износ оцени с учётом замены масла, шин, тормозов и других деталей.</p><p>Сравнивай результаты за одинаковые периоды. Уточни у работодателя или партнёра, какие расходы возмещаются отдельно.</p></section>
@@ -90,11 +89,14 @@
 <footer class="site-footer"><p class="disclaimer">Независимая информационная площадка. Не является официальным сайтом или представительством ВкусВилл.</p></footer>
 <script>
 (function(){
- const ids=["income","hours","distance","consumption","fuel","service","other","tax"];
+ const ids=["income","hours","distance","consumption","fuel","service","other","tax","days"];
  const fmt=new Intl.NumberFormat("ru-RU",{maximumFractionDigits:0});
  function update(){
   const inputs=ids.map(id=>document.getElementById(id));
-  const invalid=inputs.filter(input=>input.value.trim()==="" || !Number.isFinite(Number(input.value)) || Number(input.value)<0);
+  const mode=document.getElementById("mode").value;
+  document.querySelectorAll(".calc-car-field").forEach(field=>{field.hidden=mode!=="car";});
+  const activeInputs=inputs.filter(input=>mode==="car" || !["consumption","fuel"].includes(input.id));
+  const invalid=activeInputs.filter(input=>input.value.trim()==="" || !Number.isFinite(Number(input.value)) || Number(input.value)<0 || (input.id==="days" && Number(input.value)<1));
   inputs.forEach(input=>input.setAttribute("aria-invalid",String(invalid.includes(input))));
   const result=document.querySelector(".calc-result");
   if(invalid.length){
@@ -106,7 +108,7 @@
    return;
   }
   const v=Object.fromEntries(ids.map(id=>[id,Number(document.getElementById(id).value)]));
-  const fuelCost=v.distance*v.consumption/100*v.fuel;
+  const fuelCost=mode==="car"?v.distance*v.consumption/100*v.fuel:0;
   const serviceCost=v.distance*v.service;
   const total=fuelCost+serviceCost+v.other+v.tax;
   const net=v.income-total;
@@ -124,10 +126,13 @@
   document.getElementById("net").textContent=fmt.format(net)+" ₽";
   document.getElementById("calc-status").textContent=net<0?"Расходы превышают выплаты на "+fmt.format(Math.abs(net))+" ₽. Проверь введённые суммы.":"Расходы учтены. Это ориентировочный остаток до неуказанных затрат.";
   document.getElementById("hourly").textContent=v.hours>0?"Примерно "+fmt.format(hourlyNet)+" ₽ за час после указанных расходов":"Укажи количество отработанных часов, чтобы рассчитать сумму за час.";
-  document.getElementById("detail").textContent="Топливо: "+fmt.format(fuelCost)+" ₽ · обслуживание: "+fmt.format(serviceCost)+" ₽ · прочие расходы и отчисления: "+fmt.format(v.other+v.tax)+" ₽ · всего расходов: "+fmt.format(total)+" ₽";
+  document.getElementById("detail").textContent=(mode==="car"?"Топливо: "+fmt.format(fuelCost)+" ₽ · ":"Топливо не учитывается для велосипеда · ")+"обслуживание: "+fmt.format(serviceCost)+" ₽ · прочие расходы и отчисления: "+fmt.format(v.other+v.tax)+" ₽ · всего расходов: "+fmt.format(total)+" ₽";
+  const daily=net/v.days;
+  document.getElementById("period-average").textContent="Средний остаток за рабочий день: "+fmt.format(daily)+" ₽";
+  document.getElementById("month-estimate").textContent="Условный эквивалент за 30 календарных дней при таком среднем темпе: "+fmt.format(daily*30)+" ₽. Это математическая оценка, не прогноз и не обещание загрузки.";
  }
- ids.forEach(id=>document.getElementById(id).addEventListener("input",update));update();
+ ids.forEach(id=>document.getElementById(id).addEventListener("input",update));document.getElementById("mode").addEventListener("change",update);update();
 })();
 </script>
-  <script src="city.js?v=20261110c" defer></script>
+  <script src="city.js?v=20261110d" defer></script>
 </body></html>
