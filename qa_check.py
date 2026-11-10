@@ -17,6 +17,9 @@ check(bool(html_files), "No HTML pages found")
 pages = {p.name: p.read_text(encoding="utf-8") for p in html_files}
 home = pages.get("index.html", "")
 privacy = pages.get("privacy.html", "")
+calculator = pages.get("calculator.html", "")
+check('id="hours"' in calculator and 'id="hourly"' in calculator, "Calculator hourly estimate fields missing")
+check("net/v.hours" in calculator, "Calculator hourly net calculation missing")
 city_js = ROOT / "city.js"
 
 check("<h1" in home.lower(), "Homepage is missing H1")
