@@ -58,6 +58,23 @@ if city_js.is_file():
     check('changeButton.focus()' in js, "Focus is not returned after saving city")
     check("wa.me/79201461682" in js, "City-prefilled WhatsApp link missing")
 
+# Keep search snippets distinct and prevent accidental duplicate page titles.
+seo_titles = []
+seo_descriptions = []
+for filename, source in pages.items():
+    if filename in ("privacy.html", "404.html"):
+        continue
+    title_match = re.search(r"<title>(.*?)</title>", source, re.I | re.S)
+    description_match = re.search(r'<meta\\s+name="description"\\s+content="([^"]+)"', source, re.I)
+    check(bool(title_match), f"{filename}: page title missing")
+    check(bool(description_match), f"{filename}: meta description missing")
+    if title_match:
+        seo_titles.append((filename, re.sub(r"\\s+", " ", title_match.group(1)).strip()))
+    if description_match:
+        seo_descriptions.append((filename, description_match.group(1).strip()))
+check(len({value for _, value in seo_titles}) == len(seo_titles), "Indexable pages must have unique titles")
+check(len({value for _, value in seo_descriptions}) == len(seo_descriptions), "Indexable pages must have unique meta descriptions")
+
 for filename, source in pages.items():
     if filename not in ("privacy.html", "404.html"):
         check('name="robots" content="noindex' not in source, f"{filename}: unexpected noindex")
@@ -82,12 +99,25 @@ check(sitemap.is_file(), "Missing sitemap.xml")
 if sitemap.is_file():
     try:
         root = ET.parse(sitemap).getroot()
+        sitemap_urls = []
         for loc in root.findall(".//{*}loc"):
             url = (loc.text or "").strip()
+            sitemap_urls.append(url)
             if "/kurier-start/" in url:
                 path = url.split("/kurier-start/", 1)[1]
                 target = ROOT / (path or "index.html")
                 check(target.is_file(), f"Sitemap points to missing file: {url}")
+                canonical = re.search(r'<link\\s+rel="canonical"\\s+href="([^"]+)"', pages.get(path or "index.html", ""), re.I)
+                check(bool(canonical) and canonical.group(1) == url, f"Sitemap URL and canonical URL differ: {url}")
+        expected_sitemap = {
+            "https://76kovka76-hub.github.io/kurier-start/",
+            "https://76kovka76-hub.github.io/kurier-start/guide.html",
+            "https://76kovka76-hub.github.io/kurier-start/auto.html",
+            "https://76kovka76-hub.github.io/kurier-start/bike.html",
+            "https://76kovka76-hub.github.io/kurier-start/calculator.html",
+        }
+        check(set(sitemap_urls) == expected_sitemap, "Sitemap must list exactly the five canonical indexable pages")
+        check(len(sitemap_urls) == len(set(sitemap_urls)), "Sitemap contains duplicate URLs")
     except ET.ParseError as exc:
         check(False, f"Invalid sitemap.xml: {exc}")
 
