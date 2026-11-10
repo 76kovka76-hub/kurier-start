@@ -58,15 +58,26 @@
     });
     const saved = getSaved();
     if (saved) { updateCity(saved, "manual"); return; }
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 6000);
     try {
-      const response = await fetch("https://ipapi.co/json/", { headers: { Accept: "application/json" }, cache: "no-store" });
+      const response = await fetch("https://ipapi.co/json/", {
+        headers: { Accept: "application/json" },
+        cache: "no-store",
+        signal: controller.signal
+      });
       if (!response.ok) throw new Error("Geolocation unavailable");
       const data = await response.json();
       const city = clean(data.city), region = clean(data.region), country = clean(data.country_name);
+      if (!city) throw new Error("City unavailable");
       const detected = [city, region && region !== city ? region : "", country].filter(Boolean).join(", ");
-      if (detected) { save(detected); updateCity(detected, "ip"); }
-      else { document.getElementById("visitor-city").textContent = "Город не выбран"; }
-    } catch (_) { document.getElementById("visitor-city").textContent = "Город не выбран"; }
+      save(detected);
+      updateCity(detected, "ip");
+    } catch (_) {
+      document.getElementById("visitor-city").textContent = "Город не выбран";
+    } finally {
+      clearTimeout(timeoutId);
+    }
   };
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", start, { once: true });
   else start();
