@@ -354,3 +354,24 @@ a{ text-underline-offset:3px;text-decoration-thickness:1px}
  .faq-list details{padding:11px 2px}
  .bottom-cta{padding:18px;margin-bottom:23px}
 }
+
+
+/* Mobile navigation: make horizontal overflow discoverable and anchor targets visible. */
+@media(max-width:620px){
+ html{scroll-padding-top:122px}
+ .main-nav{
+  scrollbar-width:thin;
+  scrollbar-color:#a8c5ad transparent;
+  scroll-snap-type:x proximity;
+  padding-bottom:7px;
+ }
+ .main-nav::-webkit-scrollbar{display:block;height:3px}
+ .main-nav::-webkit-scrollbar-track{background:transparent}
+ .main-nav::-webkit-scrollbar-thumb{background:#a8c5ad;border-radius:8px}
+ .main-nav a{scroll-snap-align:start}
+}
+@media(prefers-reduced-motion:reduce){
+ html{scroll-behavior:auto}
+ .skip-link{transition:none}
+ .main-nav{scroll-behavior:auto}
+}
