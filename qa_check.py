@@ -2,6 +2,7 @@
 """Static release checks for the public GitHub Pages site."""
 from pathlib import Path
 import re
+import json
 import sys
 import xml.etree.ElementTree as ET
 
@@ -29,6 +30,10 @@ city_js = ROOT / "city.js"
 
 check("<h1" in home.lower(), "Homepage is missing H1")
 check('name="description"' in home, "Homepage is missing meta description")
+h1_match = re.search(r"<h1\\b[^>]*>([\\s\\S]*?)</h1>", home, re.I)
+h1_text = re.sub(r"<[^>]+>", " ", h1_match.group(1)) if h1_match else ""
+check("Работа курьером во ВкусВилл" in h1_text, "Homepage H1 must target the main courier-work search phrase")
+
 check('name="keywords"' in home, "Homepage is missing keyword meta")
 check("не является официальным сайтом" in home.lower(), "Homepage disclaimer missing")
 check("https://vkusvill.ru/job/courier/" in home, "Official courier link missing")
@@ -91,6 +96,18 @@ check(len({value for _, value in seo_descriptions}) == len(seo_descriptions), "I
 for filename, source in pages.items():
     if filename not in ("privacy.html", "404.html"):
         check('name="robots" content="noindex' not in source, f"{filename}: unexpected noindex")
+        title_match = re.search(r"<title>([\\s\\S]*?)</title>", source, re.I)
+        desc_match = re.search(r'<meta\\s+name="description"\\s+content="([^"]+)"', source, re.I)
+        if title_match:
+            check(25 <= len(re.sub(r"\\s+", " ", title_match.group(1)).strip()) <= 70, f"{filename}: title length should be useful in search results")
+        if desc_match:
+            check(90 <= len(desc_match.group(1)) <= 170, f"{filename}: meta description length should be 90–170 characters")
+        for schema_match in re.finditer(r'<script\\s+type="application/ld\\+json">([\\s\\S]*?)</script>', source, re.I):
+            try:
+                json.loads(schema_match.group(1))
+            except json.JSONDecodeError as exc:
+                check(False, f"{filename}: invalid JSON-LD structured data: {exc}")
+
         check('rel="canonical"' in source, f"{filename}: canonical missing")
         check('property="og:url"' in source, f"{filename}: Open Graph URL missing")
         if filename in ("guide.html", "auto.html", "bike.html", "calculator.html"):
