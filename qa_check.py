@@ -64,10 +64,9 @@ for filename in ("guide.html", "auto.html", "bike.html", "calculator.html", "cit
 check("scrollbar-width:thin" in css_text and "scroll-snap-type:x proximity" in css_text, "Mobile navigation scroll affordance missing")
 check("@media(prefers-reduced-motion:reduce)" in css_text and "scroll-behavior:auto" in css_text, "Reduced-motion support missing")
 check("@import url('https://fonts.googleapis.com'" not in (ROOT / "styles.css").read_text(encoding="utf-8"), "Google Font import must not be late in CSS")
-check(re.search(r"^body\s*\{[^}]*font:\s*15px/1\.6\s+Manrope", css_text, re.M) is not None, "Body must use the loaded Manrope font")
+check(re.search(r"^body\s*\{[^}]*font:\s*15px/1\.6\s+system-ui", css_text, re.M) is not None, "Body must use a fast system font stack")
 for filename, source in pages.items():
-    check('href="https://fonts.googleapis.com/css2?family=Manrope:' in source, f"{filename}: Manrope font stylesheet missing from head")
-    check('rel="preconnect" href="https://fonts.googleapis.com"' in source and 'rel="preconnect" href="https://fonts.gstatic.com" crossorigin' in source, f"{filename}: Google Fonts preconnect missing")
+    check("fonts.googleapis.com" not in source and "fonts.gstatic.com" not in source, f"{filename}: external font dependency should be removed for faster rendering")
 
 if city_js.is_file():
     js = city_js.read_text(encoding="utf-8")
