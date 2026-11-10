@@ -33,6 +33,7 @@ check('name="keywords"' in home, "Homepage is missing keyword meta")
 check("не является официальным сайтом" in home.lower(), "Homepage disclaimer missing")
 check("https://vkusvill.ru/job/courier/" in home, "Official courier link missing")
 check("https://wa.me/79201461682" in home and "https://t.me/daaaggg1" in home, "Contact links missing")
+check("Узнай, где проверить<br>вакансии в своём городе" in home and "Контакт для связи по вопросам вакансий. Это не официальная служба поддержки ВкусВилл." in home, "Homepage must clearly distinguish independent contact from official hiring")
 check("<form" not in home.lower(), "Unexpected data-collection form in homepage")
 check("на сайте нет анкет, форм заявок и регистрации" in privacy.lower(), "Privacy notice about no forms missing")
 check("ipapi.co" in privacy and "локальном хранилище" in privacy.lower(), "City-detection privacy notice missing")
@@ -58,6 +59,8 @@ if city_js.is_file():
     check('aria-expanded' in js and 'aria-controls="city-edit"' in js, "City selector toggle accessibility attributes missing")
     check('changeButton.focus()' in js, "Focus is not returned after saving city")
     check("wa.me/79201461682" in js, "City-prefilled WhatsApp link missing")
+    check("Контакт на этом сайте независимый и не подтверждает трудоустройство" in js, "City information must distinguish independent contact from hiring authority")
+    check("где проверить актуальные вакансии курьеров и официальные условия" in js, "WhatsApp city message must direct users to official vacancy information")
 
 # Keep search snippets distinct and prevent accidental duplicate page titles.
 seo_titles = []
