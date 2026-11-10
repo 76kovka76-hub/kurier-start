@@ -21,7 +21,51 @@
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%231c7650'/%3E%3Cpath d='M18 17h28v7H18zm0 12h21v7H18zm0 12h25v7H18z' fill='white'/%3E%3C/svg%3E">
   <link rel="stylesheet" href="styles.css">
   <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"WebSite","name":"Подбор курьеров — независимая справочная страница","inLanguage":"ru-RU","description":"Информация о курьерских направлениях и ссылки на официальные вакансии ВкусВилл."}
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "name": "Курьер — независимая справочная страница",
+        "url": "https://76kovka76-hub.github.io/kurier-start/",
+        "inLanguage": "ru-RU",
+        "description": "Независимая информация о работе курьером, направлениях доставки и официальных вакансиях."
+      },
+      {
+        "@type": "WebPage",
+        "name": "Работа курьером во ВкусВилл",
+        "url": "https://76kovka76-hub.github.io/kurier-start/",
+        "isPartOf": {"@type": "WebSite", "url": "https://76kovka76-hub.github.io/kurier-start/"},
+        "inLanguage": "ru-RU",
+        "description": "Информация о работе автокурьером и велокурьером, требованиях и проверке вакансий по городам."
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Есть ли работа курьером в моём городе?",
+            "acceptedAnswer": {"@type": "Answer", "text": "Наличие набора зависит от региона. Проверь вакансии на официальном сайте и уточни доступность перед подключением."}
+          },
+          {
+            "@type": "Question",
+            "name": "Можно ли устроиться без опыта?",
+            "acceptedAnswer": {"@type": "Answer", "text": "Требования зависят от конкретного предложения. Изучи описание выбранной роли и уточни детали у официального партнёра."}
+          },
+          {
+            "@type": "Question",
+            "name": "Какие документы могут понадобиться?",
+            "acceptedAnswer": {"@type": "Answer", "text": "Для некоторых партнёрских направлений могут потребоваться самозанятость, медицинская книжка и смартфон. Полный актуальный список проверяй на официальной странице."}
+          },
+          {
+            "@type": "Question",
+            "name": "Сайт является официальным сайтом ВкусВилл?",
+            "acceptedAnswer": {"@type": "Answer", "text": "Нет. Это независимая информационная площадка. Официальные вакансии и условия размещены на сайте ВкусВилл."}
+          }
+        ]
+      }
+    ]
+  }
   </script>
 </head>
 <body>
