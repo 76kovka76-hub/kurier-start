@@ -606,3 +606,14 @@ main.page[style*="padding-top:15vh"]>.direction-card a{text-decoration:none}
  .mobile-dock-message{background:#1c7650;color:#fff}
  .mobile-contact-dock a span{font-size:15px}
 }
+
+
+/* Visible breadcrumbs keep supporting guides easy to navigate. */
+.breadcrumbs{
+ display:flex;align-items:center;flex-wrap:wrap;gap:9px;
+ margin:0 0 19px;color:#87938a;font-size:11px;line-height:1.5;
+}
+.breadcrumbs a{color:#477456;font-weight:750;text-decoration:none}
+.breadcrumbs a:hover{text-decoration:underline;text-underline-offset:3px}
+.breadcrumbs [aria-current="page"]{color:#647268}
+@media(max-width:620px){.breadcrumbs{margin-bottom:15px;font-size:10px}}
