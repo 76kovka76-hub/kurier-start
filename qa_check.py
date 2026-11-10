@@ -26,7 +26,7 @@ check("[fuelCost,serviceCost,total,net].every(Number.isFinite)" in calculator an
 check('id="calc-status"' in calculator and "Расходы превышают выплаты" in calculator, "Calculator negative-balance warning missing")
 check(calculator.count("required>") >= 9 and 'aria-invalid' in calculator and "Расчёт временно недоступен" in calculator, "Calculator must reject blank and invalid inputs")
 check('id="mode"' in calculator and 'option value="bike"' in calculator and 'mode==="car"' in calculator, "Calculator must support car and bicycle modes")
-check('id="month-estimate"' in calculator and "daily*30" in calculator, "Calculator monthly equivalent estimate missing")
+check('id="month-estimate"' in calculator and "daily*30" in calculator and "Number.isFinite(monthEstimate)" in calculator, "Calculator monthly equivalent estimate missing or unguarded")
 check('input[aria-invalid="true"]' in css_text, "Invalid calculator inputs must be visually highlighted")
 city_js = ROOT / "city.js"
 
