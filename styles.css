@@ -586,3 +586,23 @@ main.page[style*="padding-top:15vh"]>.direction-card a{text-decoration:none}
 @media(prefers-reduced-motion:no-preference){
  .hero-highlights>a{transition:background .18s,border-color .18s,color .18s}
 }
+
+/* Mobile quick-contact dock: keep the two main contact actions within reach. */
+.mobile-contact-dock{display:none}
+@media(max-width:620px){
+ body{padding-bottom:calc(70px + env(safe-area-inset-bottom))}
+ .mobile-contact-dock{
+  position:fixed;z-index:35;left:12px;right:12px;bottom:calc(10px + env(safe-area-inset-bottom));
+  display:grid;grid-template-columns:1fr 1fr;gap:8px;
+  padding:7px;border:1px solid rgba(218,231,219,.95);border-radius:15px;
+  background:rgba(255,255,255,.94);backdrop-filter:blur(16px);
+  box-shadow:0 8px 28px rgba(24,55,34,.16);
+ }
+ .mobile-contact-dock a{
+  min-height:43px;display:flex;align-items:center;justify-content:center;gap:8px;
+  border-radius:10px;text-decoration:none;font-size:12px;font-weight:800;
+ }
+ .mobile-dock-call{background:#edf4ee;color:#185c3c}
+ .mobile-dock-message{background:#1c7650;color:#fff}
+ .mobile-contact-dock a span{font-size:15px}
+}
