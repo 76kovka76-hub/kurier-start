@@ -283,3 +283,19 @@ a{ text-underline-offset:3px;text-decoration-thickness:1px}
 @media(prefers-reduced-motion:no-preference){
  .button,.header-contact,.direction-card,.contact-action{transition:transform .2s ease,box-shadow .2s ease,background .2s ease,border-color .2s ease}
 }
+
+
+/* Mobile navigation and keyboard accessibility */
+@media(max-width:620px){
+ .site-header{height:auto;min-height:62px}
+ .header-inner{height:auto;min-height:62px;flex-wrap:wrap;row-gap:7px;padding-top:9px;padding-bottom:8px}
+ .main-nav{display:flex;order:3;width:100%;min-width:0;gap:18px;overflow-x:auto;overflow-y:hidden;padding:2px 0 4px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+ .main-nav::-webkit-scrollbar{display:none}
+ .main-nav a{flex:0 0 auto;white-space:nowrap;font-size:11px;padding:3px 0}
+ .header-contact{margin-left:auto}
+}
+:where(a,button,input,select,textarea,summary):focus-visible{
+ outline:3px solid #8dbb99;
+ outline-offset:3px;
+ border-radius:5px;
+}
