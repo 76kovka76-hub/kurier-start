@@ -92,6 +92,19 @@ for filename, source in pages.items():
         seo_descriptions.append((filename, description_match.group(1).strip()))
 check(len({value for _, value in seo_titles}) == len(seo_titles), "Indexable pages must have unique titles")
 check(len({value for _, value in seo_descriptions}) == len(seo_descriptions), "Indexable pages must have unique meta descriptions")
+# Every supporting page should answer real candidate questions in visible, crawlable text.
+faq_expectations = {
+    "guide.html": ("Частые вопросы перед откликом", "Где проверить, есть ли набор в моём городе?"),
+    "auto.html": ("Частые вопросы о работе на своём авто", "Какие расходы нужно вычесть из выплат?"),
+    "bike.html": ("Частые вопросы о доставке на велосипеде", "Подойдёт ли обычный велосипед?"),
+    "calculator.html": ("Частые вопросы о калькуляторе", "Сохраняются ли введённые данные?"),
+}
+for filename, phrases in faq_expectations.items():
+    source = pages.get(filename, "")
+    for phrase in phrases:
+        check(phrase in source, f"{filename}: useful FAQ content missing: {phrase}")
+    check(len(re.findall(r"<details>", source, re.I)) >= 3, f"{filename}: expected at least three visible FAQ answers")
+
 
 for filename, source in pages.items():
     if filename not in ("privacy.html", "404.html"):
