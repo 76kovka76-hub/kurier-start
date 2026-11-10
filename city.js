@@ -7,16 +7,10 @@
   const updateCity = (city, source) => {
     city = clean(city);
     if (!city) return;
-    const localCard = document.querySelector(".city-personal");
-    if (localCard) localCard.hidden = false;
     const value = document.getElementById("visitor-city");
     if (value) value.textContent = city;
     const note = document.getElementById("city-note");
     if (note) note.textContent = source === "manual" ? "Город выбран вами" : "Город определён приблизительно по IP";
-    const localTitle = document.getElementById("city-personal-title");
-    if (localTitle) localTitle.textContent = "Информация для " + city;
-    const localText = document.getElementById("city-personal-text");
-    if (localText) localText.textContent = "Проверьте актуальные вакансии курьеров в городе " + city + " на официальной странице ВкусВилл. Наличие вакансий и условия могут меняться. Контакт на этом сайте независимый и не подтверждает трудоустройство.";
     document.querySelectorAll("[data-city-text]").forEach((node) => { node.textContent = city; });
     document.querySelectorAll('a[href*="wa.me/79201461682"]').forEach((link) => {
       const message = "Здравствуйте! Я из города " + city + ". Подскажите, пожалуйста, где проверить актуальные вакансии курьеров и официальные условия?";
@@ -33,11 +27,6 @@
     const header = document.querySelector(".site-header");
     if (header) header.insertAdjacentElement("afterend", bar);
     else main.insertAdjacentElement("beforebegin", bar);
-    const localCard = document.createElement("aside");
-    localCard.className = "city-personal";
-    localCard.hidden = true;
-    localCard.innerHTML = '<strong id="city-personal-title" aria-live="polite" aria-atomic="true">Информация для вашего города</strong><p id="city-personal-text">Уточняем региональные условия. Можно изменить город вручную.</p><span>Актуальные вакансии проверяйте самостоятельно в официальных источниках.</span>';
-    bar.insertAdjacentElement("afterend", localCard);
     const edit = document.getElementById("city-edit");
     const changeButton = document.getElementById("city-change");
     const cityInput = document.getElementById("city-input");
