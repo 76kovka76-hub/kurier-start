@@ -48,14 +48,14 @@
 <div class="calc-card">
 <h2 style="margin-top:0">Твои данные за выбранный период</h2>
 <div class="calc-grid">
-<div class="calc-field"><label for="income">Ожидаемые выплаты за период, ₽</label><input id="income" type="number" min="0" step="100" value="80000"></div>
-<div class="calc-field"><label for="hours">Часы работы за этот период</label><input id="hours" type="number" min="0" step="1" value="160"></div>
-<div class="calc-field"><label for="distance">Пробег по работе, км</label><input id="distance" type="number" min="0" step="10" value="1500"></div>
-<div class="calc-field"><label for="consumption">Расход топлива, л на 100 км</label><input id="consumption" type="number" min="0" step=".1" value="9"></div>
-<div class="calc-field"><label for="fuel">Цена топлива, ₽/л</label><input id="fuel" type="number" min="0" step=".1" value="60"></div>
-<div class="calc-field"><label for="service">Резерв на обслуживание, ₽/км</label><input id="service" type="number" min="0" step=".1" value="3"></div>
-<div class="calc-field"><label for="other">Парковка, связь и прочие расходы, ₽</label><input id="other" type="number" min="0" step="100" value="2000"></div>
-<div class="calc-field"><label for="tax">Налоги и прочие отчисления, ₽</label><input id="tax" type="number" min="0" step="100" value="0"></div>
+<div class="calc-field"><label for="income">Ожидаемые выплаты за период, ₽</label><input id="income" type="number" min="0" step="100" value="80000" required></div>
+<div class="calc-field"><label for="hours">Часы работы за этот период</label><input id="hours" type="number" min="0" step="1" value="160" required></div>
+<div class="calc-field"><label for="distance">Пробег по работе, км</label><input id="distance" type="number" min="0" step="10" value="1500" required></div>
+<div class="calc-field"><label for="consumption">Расход топлива, л на 100 км</label><input id="consumption" type="number" min="0" step=".1" value="9" required></div>
+<div class="calc-field"><label for="fuel">Цена топлива, ₽/л</label><input id="fuel" type="number" min="0" step=".1" value="60" required></div>
+<div class="calc-field"><label for="service">Резерв на обслуживание, ₽/км</label><input id="service" type="number" min="0" step=".1" value="3" required></div>
+<div class="calc-field"><label for="other">Парковка, связь и прочие расходы, ₽</label><input id="other" type="number" min="0" step="100" value="2000" required></div>
+<div class="calc-field"><label for="tax">Налоги и прочие отчисления, ₽</label><input id="tax" type="number" min="0" step="100" value="0" required></div>
 </div>
 <div class="calc-result" aria-live="polite"><span>Ориентировочно останется</span><strong id="net">—</strong><p id="hourly" class="calc-note" style="font-weight:700"></p><p id="calc-status" class="calc-status" role="status"></p><p id="detail" class="calc-note"></p></div>
 <p class="calc-note">Это упрощённая оценка, а не прогноз или гарантия заработка. Укажи свои реальные цифры. Не забудь учитывать амортизацию, страховку, мойку, платные дороги, простой и другие расходы, если они применимы.</p>
@@ -69,7 +69,19 @@
  const ids=["income","hours","distance","consumption","fuel","service","other","tax"];
  const fmt=new Intl.NumberFormat("ru-RU",{maximumFractionDigits:0});
  function update(){
-  const v=Object.fromEntries(ids.map(id=>[id,Math.max(0,Number(document.getElementById(id).value)||0)]));
+  const inputs=ids.map(id=>document.getElementById(id));
+  const invalid=inputs.filter(input=>input.value.trim()==="" || !Number.isFinite(Number(input.value)) || Number(input.value)<0);
+  inputs.forEach(input=>input.setAttribute("aria-invalid",String(invalid.includes(input))));
+  const result=document.querySelector(".calc-result");
+  if(invalid.length){
+   result.classList.remove("is-negative");
+   document.getElementById("net").textContent="—";
+   document.getElementById("hourly").textContent="Проверь заполнение всех полей: значения должны быть нулём или больше.";
+   document.getElementById("calc-status").textContent="Расчёт временно недоступен: исправь выделенные поля.";
+   document.getElementById("detail").textContent="";
+   return;
+  }
+  const v=Object.fromEntries(ids.map(id=>[id,Number(document.getElementById(id).value)]));
   const fuelCost=v.distance*v.consumption/100*v.fuel;
   const serviceCost=v.distance*v.service;
   const total=fuelCost+serviceCost+v.other+v.tax;
