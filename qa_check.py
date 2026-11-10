@@ -107,6 +107,23 @@ for filename, source in pages.items():
         if local:
             check((ROOT / local).is_file(), f"{filename}: broken local link {href}")
 
+
+# Validate in-page and cross-page fragment links, not only file existence.
+page_ids = {
+    filename: set(re.findall(r'\\bid=["\\']([^"\\']+)["\\']', source))
+    for filename, source in pages.items()
+}
+for filename, source in pages.items():
+    found_ids = re.findall(r'\\bid=["\\']([^"\\']+)["\\']', source)
+    check(len(found_ids) == len(set(found_ids)), f"{filename}: duplicate HTML id")
+    for href in re.findall(r'<a\\b[^>]*href=["\\']([^"\\']+)["\\']', source, re.I):
+        if "#" not in href or href.startswith(("https://", "http://", "mailto:", "tel:")):
+            continue
+        target_file, fragment = href.split("#", 1)
+        target_name = target_file.split("?", 1)[0] or filename
+        if target_name in pages and fragment:
+            check(fragment in page_ids[target_name], f"{filename}: broken fragment link {href}")
+
 sitemap = ROOT / "sitemap.xml"
 check(sitemap.is_file(), "Missing sitemap.xml")
 if sitemap.is_file():
