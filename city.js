@@ -7,6 +7,8 @@
   const updateCity = (city, source) => {
     city = clean(city);
     if (!city) return;
+    const localCard = document.querySelector(".city-personal");
+    if (localCard) localCard.hidden = false;
     const value = document.getElementById("visitor-city");
     if (value) value.textContent = city;
     const note = document.getElementById("city-note");
@@ -27,12 +29,13 @@
     const bar = document.createElement("section");
     bar.className = "city-bar";
     bar.setAttribute("aria-label", "Ваш город");
-    bar.innerHTML = '<div class="city-bar-copy"><span class="city-bar-label">ВАШ ГОРОД</span><strong id="visitor-city">Определяем…</strong><small id="city-note">Можно изменить вручную</small></div><button type="button" class="city-change" id="city-change">Изменить город</button><form class="city-edit" id="city-edit" hidden><label for="city-input">Укажите город</label><input id="city-input" name="city" maxlength="70" placeholder="Например, Казань" required><button type="submit">Сохранить</button></form>';
+    bar.innerHTML = '<div class="city-bar-copy"><span class="city-bar-label">ВАШ ГОРОД</span><strong id="visitor-city">Город не выбран</strong><small id="city-note">При желании укажите его вручную</small></div><button type="button" class="city-change" id="city-change">Изменить город</button><form class="city-edit" id="city-edit" hidden><label for="city-input">Укажите город</label><input id="city-input" name="city" maxlength="70" placeholder="Например, Казань" required><button type="submit">Сохранить</button></form>';
     const header = document.querySelector(".site-header");
     if (header) header.insertAdjacentElement("afterend", bar);
     else main.insertAdjacentElement("beforebegin", bar);
     const localCard = document.createElement("aside");
     localCard.className = "city-personal";
+    localCard.hidden = true;
     localCard.innerHTML = '<strong id="city-personal-title">Информация для вашего города</strong><p id="city-personal-text">Уточняем региональные условия. Можно изменить город вручную.</p><a href="https://vkusvill.ru/job/courier/" target="_blank" rel="noopener noreferrer">Проверить официальные вакансии ↗</a>';
     bar.insertAdjacentElement("afterend", localCard);
     const edit = document.getElementById("city-edit");
@@ -55,8 +58,8 @@
       const city = clean(data.city), region = clean(data.region), country = clean(data.country_name);
       const detected = [city, region && region !== city ? region : "", country].filter(Boolean).join(", ");
       if (detected) { save(detected); updateCity(detected, "ip"); }
-      else updateCity("выберите вручную", "ip");
-    } catch (_) { updateCity("не определён — выберите вручную", "ip"); }
+      else { document.getElementById("visitor-city").textContent = "Город не выбран"; }
+    } catch (_) { document.getElementById("visitor-city").textContent = "Город не выбран"; }
   };
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", start, { once: true });
   else start();
