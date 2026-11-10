@@ -81,7 +81,7 @@ if city_js.is_file():
 # Ensure homepage FAQ structured data stays aligned with visible questions.
 homepage = pages.get("index.html", "")
 # Remove structured-data scripts before checking that FAQ answers are actually visible.
-visible_homepage = re.sub(r'<script\\b[^>]*>.*?</script>', '', homepage, flags=re.I | re.S)
+visible_homepage = re.sub(r'<script\b[^>]*>.*?</script>', '', homepage, flags=re.I | re.S)
 for schema_match in re.finditer(r'<script\s+type="application/ld\+json">([\s\S]*?)</script>', homepage, re.I):
     try:
         schema_data = json.loads(schema_match.group(1))
