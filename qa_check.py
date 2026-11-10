@@ -1,14 +1,73 @@
 #!/usr/bin/env python3
+"""Static release checks for the public GitHub Pages site."""
 from pathlib import Path
-import re, sys
-R=Path(__file__).resolve().parent; h=(R/'index.html').read_text(encoding='utf-8'); p=(R/'privacy.html').read_text(encoding='utf-8'); e=[]
-def ck(x,m):
-    if not x:e.append(m)
-ck('<h1' in h,'Missing H1'); ck('name="keywords"' in h,'Missing keyword meta'); ck('не является официальным сайтом' in h.lower(),'Missing independent-site disclaimer')
-ck('https://vkusvill.ru/job/courier/' in h,'Missing official courier link'); ck('https://wa.me/79201461682' in h and 'https://t.me/daaaggg1' in h,'Missing contact links')
-ck('<form' not in h.lower(),'Form must stay disabled until legal docs are ready'); ck('id="phone"' not in h and 'id="name"' not in h,'Personal-data input found')
-ck('не предусмотрены анкеты' in p,'No-data notice missing'); ck('[указать' not in p,'Template placeholder found')
-ck('canonical' not in h,'Canonical must wait for verified domain'); ck((R/'styles.css').is_file(),'Missing CSS')
-for a in re.finditer(r'<a\b([^>]*target="_blank"[^>]*)>',h,re.I): ck('noopener' in a.group(1),'Unsafe external target blank')
-if e: print('FAIL\n'+'\n'.join(e)); sys.exit(1)
-print('PASS: public no-form release checks')
+import re
+import sys
+import xml.etree.ElementTree as ET
+
+ROOT = Path(__file__).resolve().parent
+errors = []
+
+def check(condition, message):
+    if not condition:
+        errors.append(message)
+
+html_files = sorted(ROOT.glob("*.html"))
+check(bool(html_files), "No HTML pages found")
+pages = {p.name: p.read_text(encoding="utf-8") for p in html_files}
+home = pages.get("index.html", "")
+privacy = pages.get("privacy.html", "")
+city_js = ROOT / "city.js"
+
+check("<h1" in home.lower(), "Homepage is missing H1")
+check('name="description"' in home, "Homepage is missing meta description")
+check('name="keywords"' in home, "Homepage is missing keyword meta")
+check("не является официальным сайтом" in home.lower(), "Homepage disclaimer missing")
+check("https://vkusvill.ru/job/courier/" in home, "Official courier link missing")
+check("https://wa.me/79201461682" in home and "https://t.me/daaaggg1" in home, "Contact links missing")
+check("<form" not in home.lower(), "Unexpected data-collection form in homepage")
+check("не предусмотрены анкеты" in privacy.lower(), "Privacy notice about no forms missing")
+check("ipapi.co" in privacy and "локальном хранилище" in privacy.lower(), "City-detection privacy notice missing")
+check(city_js.is_file(), "Missing city.js")
+check((ROOT / "styles.css").is_file(), "Missing styles.css")
+
+if city_js.is_file():
+    js = city_js.read_text(encoding="utf-8")
+    check("https://ipapi.co/json/" in js, "IP city lookup missing")
+    check("kurierStartCity" in js, "Manual city persistence missing")
+    check("city-personal-text" in js, "City-specific page content missing")
+    check("wa.me/79201461682" in js, "City-prefilled WhatsApp link missing")
+
+for filename, source in pages.items():
+    if filename not in ("privacy.html", "404.html"):
+        check('name="robots" content="noindex' not in source, f"{filename}: unexpected noindex")
+        check('rel="canonical"' in source, f"{filename}: canonical missing")
+    check('src="city.js"' in source, f"{filename}: city.js not included")
+    for match in re.finditer(r'<a\\b([^>]*target="_blank"[^>]*)>', source, re.I):
+        check("noopener" in match.group(1), f"{filename}: unsafe target=_blank link")
+    for href in re.findall(r'<(?:a|link)\\b[^>]*href=["\\']([^"\\']+)["\\']', source, re.I):
+        if href.startswith(("#", "https://", "http://", "mailto:", "tel:", "data:", "javascript:")):
+            continue
+        local = href.split("#", 1)[0].split("?", 1)[0]
+        if local:
+            check((ROOT / local).is_file(), f"{filename}: broken local link {href}")
+
+sitemap = ROOT / "sitemap.xml"
+check(sitemap.is_file(), "Missing sitemap.xml")
+if sitemap.is_file():
+    try:
+        root = ET.parse(sitemap).getroot()
+        for loc in root.findall(".//{*}loc"):
+            url = (loc.text or "").strip()
+            if "/kurier-start/" in url:
+                path = url.split("/kurier-start/", 1)[1]
+                target = ROOT / (path or "index.html")
+                check(target.is_file(), f"Sitemap points to missing file: {url}")
+    except ET.ParseError as exc:
+        check(False, f"Invalid sitemap.xml: {exc}")
+
+if errors:
+    print("FAIL")
+    print("\\n".join(errors))
+    sys.exit(1)
+print(f"PASS: {len(pages)} HTML pages, city personalization, local links and sitemap")
