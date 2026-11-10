@@ -114,7 +114,9 @@
   const serviceCost=v.distance*v.service;
   const total=fuelCost+serviceCost+v.other+v.tax;
   const net=v.income-total;
-  const hourlyNet=v.hours>0?net/v.hours:null;\n  const daily=net/v.days;\n  const monthEstimate=daily*30;
+  const hourlyNet=v.hours>0?net/v.hours:null;
+  const daily=net/v.days;
+  const monthEstimate=daily*30;
   const result=document.querySelector(".calc-result");
   if(![fuelCost,serviceCost,total,net,daily,monthEstimate].every(Number.isFinite) || (hourlyNet!==null && !Number.isFinite(hourlyNet))){
    result.classList.remove("is-negative");
@@ -122,6 +124,8 @@
    document.getElementById("hourly").textContent="Уменьши слишком большие значения и повтори расчёт.";
    document.getElementById("calc-status").textContent="Расчёт временно недоступен: итог выходит за допустимый числовой диапазон.";
    document.getElementById("detail").textContent="";
+   document.getElementById("period-average").textContent="";
+   document.getElementById("month-estimate").textContent="";
    return;
   }
   result.classList.toggle("is-negative",net<0);
@@ -129,7 +133,6 @@
   document.getElementById("calc-status").textContent=net<0?"Расходы превышают выплаты на "+fmt.format(Math.abs(net))+" ₽. Проверь введённые суммы.":"Расходы учтены. Это ориентировочный остаток до неуказанных затрат.";
   document.getElementById("hourly").textContent=v.hours>0?"Примерно "+fmt.format(hourlyNet)+" ₽ за час после указанных расходов":"Укажи количество отработанных часов, чтобы рассчитать сумму за час.";
   document.getElementById("detail").textContent=(mode==="car"?"Топливо: "+fmt.format(fuelCost)+" ₽ · ":"Топливо не учитывается для велосипеда · ")+"обслуживание: "+fmt.format(serviceCost)+" ₽ · прочие расходы и отчисления: "+fmt.format(v.other+v.tax)+" ₽ · всего расходов: "+fmt.format(total)+" ₽";
-  const daily=net/v.days;
   document.getElementById("period-average").textContent="Средний остаток за рабочий день: "+fmt.format(daily)+" ₽";
   document.getElementById("month-estimate").textContent="Условный эквивалент за 30 календарных дней при таком среднем темпе: "+fmt.format(monthEstimate)+" ₽. Это математическая оценка, не прогноз и не обещание загрузки.";
  }
