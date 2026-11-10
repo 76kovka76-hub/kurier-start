@@ -86,11 +86,20 @@
   const serviceCost=v.distance*v.service;
   const total=fuelCost+serviceCost+v.other+v.tax;
   const net=v.income-total;
+  const hourlyNet=v.hours>0?net/v.hours:null;
   const result=document.querySelector(".calc-result");
+  if(![fuelCost,serviceCost,total,net].every(Number.isFinite) || (hourlyNet!==null && !Number.isFinite(hourlyNet))){
+   result.classList.remove("is-negative");
+   document.getElementById("net").textContent="—";
+   document.getElementById("hourly").textContent="Уменьши слишком большие значения и повтори расчёт.";
+   document.getElementById("calc-status").textContent="Расчёт временно недоступен: итог выходит за допустимый числовой диапазон.";
+   document.getElementById("detail").textContent="";
+   return;
+  }
   result.classList.toggle("is-negative",net<0);
   document.getElementById("net").textContent=fmt.format(net)+" ₽";
   document.getElementById("calc-status").textContent=net<0?"Расходы превышают выплаты на "+fmt.format(Math.abs(net))+" ₽. Проверь введённые суммы.":"Расходы учтены. Это ориентировочный остаток до неуказанных затрат.";
-  document.getElementById("hourly").textContent=v.hours>0?"Примерно "+fmt.format(net/v.hours)+" ₽ чистыми за час":"Укажи количество часов, чтобы рассчитать доход за час.";
+  document.getElementById("hourly").textContent=v.hours>0?"Примерно "+fmt.format(hourlyNet)+" ₽ чистыми за час":"Укажи количество часов, чтобы рассчитать доход за час.";
   document.getElementById("detail").textContent="Топливо: "+fmt.format(fuelCost)+" ₽ · обслуживание: "+fmt.format(serviceCost)+" ₽ · прочие расходы и отчисления: "+fmt.format(v.other+v.tax)+" ₽ · всего расходов: "+fmt.format(total)+" ₽";
  }
  ids.forEach(id=>document.getElementById(id).addEventListener("input",update));update();
