@@ -49,6 +49,7 @@ for filename, source in pages.items():
         check('property="og:url"' in source, f"{filename}: Open Graph URL missing")
         check('name="twitter:card"' in source and 'name="twitter:title"' in source and 'name="twitter:description"' in source, f"{filename}: social preview metadata incomplete")
     check('src="city.js' in source, f"{filename}: city.js not included")
+    check('class="skip-link"' in source and ('<main id="main-content"' in source or '<main id="top"' in source), f"{filename}: keyboard skip navigation missing")
     for match in re.finditer(r'<a\b([^>]*target="_blank"[^>]*)>', source, re.I):
         check("noopener" in match.group(1), f"{filename}: unsafe target=_blank link")
     for href in re.findall(r'<(?:a|link)\b[^>]*href=["\']([^"\']+)["\']', source, re.I):
