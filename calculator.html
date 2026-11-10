@@ -39,7 +39,7 @@
   {
     "@context": "https://schema.org",
     "@type": "WebApplication",
-    "name": "Калькулятор дохода автокурьера",
+    "name": "Калькулятор дохода курьера",
     "url": "https://76kovka76-hub.github.io/kurier-start/calculator.html",
     "applicationCategory": "UtilitiesApplication",
     "operatingSystem": "Любое устройство с браузером",
@@ -69,7 +69,7 @@
 <div class="calc-field"><label for="service">Расходы на обслуживание и износ, ₽/км</label><input id="service" type="number" min="0" step=".1" value="3" required></div>
 <div class="calc-field"><label for="other">Парковка, связь и прочие расходы, ₽</label><input id="other" type="number" min="0" step="100" value="2000" required></div>
 <div class="calc-field"><label for="tax">Налоги и прочие отчисления, ₽</label><input id="tax" type="number" min="0" step="100" value="0" required></div>
-<div class="calc-field"><label for="days">Количество рабочих дней за период</label><input id="days" type="number" min="1" step="1" value="20" required></div>
+<div class="calc-field"><label for="days">Количество календарных дней за период</label><input id="days" type="number" min="1" step="1" value="20" required></div>
 </div>
 <div class="calc-result" aria-live="polite"><span>Примерный остаток после указанных расходов</span><strong id="net">—</strong><p id="hourly" class="calc-note" style="font-weight:700"></p><p id="calc-status" class="calc-status" role="status"></p><p id="detail" class="calc-note"></p><p id="period-average" class="calc-note"></p><p id="month-estimate" class="calc-note"></p></div>
 <p class="calc-note">Это упрощённая оценка, а не прогноз или гарантия заработка. Укажи свои реальные цифры. Не забудь учитывать амортизацию, страховку, мойку, платные дороги, простой и другие расходы, если они применимы.</p>
@@ -105,6 +105,8 @@
    document.getElementById("hourly").textContent="Проверь заполнение всех полей: значения должны быть нулём или больше.";
    document.getElementById("calc-status").textContent="Расчёт временно недоступен: исправь выделенные поля.";
    document.getElementById("detail").textContent="";
+   document.getElementById("period-average").textContent="";
+   document.getElementById("month-estimate").textContent="";
    return;
   }
   const v=Object.fromEntries(ids.map(id=>[id,Number(document.getElementById(id).value)]));
