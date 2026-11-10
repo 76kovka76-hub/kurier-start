@@ -79,12 +79,12 @@ if city_js.is_file():
     check("AbortController()" in js and "clearTimeout(timeoutId)" in js and "6000" in js, "IP city lookup must have a six-second timeout")
     check('if (!city) throw new Error("City unavailable")' in js, "IP lookup must not treat region-only data as a city")
     check("kurierStartCity" in js, "Manual city persistence missing")
-    check("city-personal-text" in js, "City-specific page content missing")
+    check("city-personal-text" not in js and "city-personal" not in js, "Obsolete city-specific vacancy card must be removed")
     check('aria-live="polite"' in js and 'aria-atomic="true"' in js, "City changes must be announced to assistive technology")
     check('aria-expanded' in js and 'aria-controls="city-edit"' in js, "City selector toggle accessibility attributes missing")
     check('changeButton.focus()' in js, "Focus is not returned after saving city")
     check("wa.me/79201461682" in js, "City-prefilled WhatsApp link missing")
-    check("Контакт на этом сайте независимый и не подтверждает трудоустройство" in js, "City information must distinguish independent contact from hiring authority")
+    check("Проверьте актуальные вакансии курьеров" not in js and "Актуальные вакансии проверяйте самостоятельно" not in js, "Obsolete city vacancy prompts must stay removed")
     check("где проверить актуальные вакансии курьеров и официальные условия" in js, "WhatsApp city message must direct users to official vacancy information")
 
 # Ensure homepage FAQ structured data stays aligned with visible questions.
