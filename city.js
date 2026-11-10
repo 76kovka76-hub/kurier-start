@@ -36,7 +36,7 @@
     const localCard = document.createElement("aside");
     localCard.className = "city-personal";
     localCard.hidden = true;
-    localCard.innerHTML = '<strong id="city-personal-title" aria-live="polite" aria-atomic="true">Информация для вашего города</strong><p id="city-personal-text">Уточняем региональные условия. Можно изменить город вручную.</p><a href="https://vkusvill.ru/job/courier/" target="_blank" rel="noopener noreferrer">Проверить официальные вакансии ↗</a>';
+    localCard.innerHTML = '<strong id="city-personal-title" aria-live="polite" aria-atomic="true">Информация для вашего города</strong><p id="city-personal-text">Уточняем региональные условия. Можно изменить город вручную.</p><span>Актуальные вакансии проверяйте самостоятельно в официальных источниках.</span>';
     bar.insertAdjacentElement("afterend", localCard);
     const edit = document.getElementById("city-edit");
     const changeButton = document.getElementById("city-change");
