@@ -34,7 +34,7 @@ check("не является официальным сайтом" in home.lower(
 check("https://vkusvill.ru/job/courier/" in home, "Official courier link missing")
 check("https://wa.me/79201461682" in home and "https://t.me/daaaggg1" in home, "Contact links missing")
 check("<form" not in home.lower(), "Unexpected data-collection form in homepage")
-check("не предусмотрены анкеты" in privacy.lower(), "Privacy notice about no forms missing")
+check("на сайте нет анкет, форм заявок и регистрации" in privacy.lower(), "Privacy notice about no forms missing")
 check("ipapi.co" in privacy and "локальном хранилище" in privacy.lower(), "City-detection privacy notice missing")
 check(city_js.is_file(), "Missing city.js")
 check((ROOT / "styles.css").is_file(), "Missing styles.css")
