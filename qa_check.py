@@ -104,6 +104,9 @@ for filename, phrases in faq_expectations.items():
     for phrase in phrases:
         check(phrase in source, f"{filename}: useful FAQ content missing: {phrase}")
     check(len(re.findall(r"<details>", source, re.I)) >= 3, f"{filename}: expected at least three visible FAQ answers")
+    if filename == "guide.html":
+        check("Как проверить надёжность предложения" in source and "Не плати за обещание гарантированного трудоустройства" in source, "Guide must include practical recruitment-scam safety guidance")
+        check("Нужно ли платить за трудоустройство курьером?" in source, "Guide must answer whether candidates should pay for recruitment")
 
 
 for filename, source in pages.items():
