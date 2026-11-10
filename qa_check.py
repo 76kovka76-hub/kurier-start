@@ -42,7 +42,7 @@ check((ROOT / "styles.css").is_file(), "Missing styles.css")
 check("scroll-padding-top:122px" in css_text, "Mobile anchor offset missing")
 for filename in ("guide.html", "auto.html", "bike.html", "calculator.html"):
     source = pages.get(filename, "")
-    nav_match = re.search(r'<nav class="main-nav"[^>]*>([\\s\\S]*?)</nav>', source)
+    nav_match = re.search(r'<nav class="main-nav"[^>]*>(.*?)</nav>', source, re.S)
     check(bool(nav_match), f"{filename}: primary navigation missing")
     if nav_match:
         nav = nav_match.group(1)
