@@ -20,11 +20,13 @@ home = pages.get("index.html", "")
 privacy = pages.get("privacy.html", "")
 calculator = pages.get("calculator.html", "")
 css_text = (ROOT / "styles.css").read_text(encoding="utf-8")
-check('id="hours"' in calculator and 'id="hourly"' in calculator, "Calculator hourly estimate fields missing")
+check('id="hours"' in calculator and 'id="hourly"' in calculator and 'id="days"' in calculator, "Calculator hourly and daily estimate fields missing")
 check("net/v.hours" in calculator, "Calculator hourly net calculation missing")
 check("[fuelCost,serviceCost,total,net].every(Number.isFinite)" in calculator and "Number.isFinite(hourlyNet)" in calculator and "числовой диапазон" in calculator, "Calculator must guard against numeric overflow")
 check('id="calc-status"' in calculator and "Расходы превышают выплаты" in calculator, "Calculator negative-balance warning missing")
-check(calculator.count("required>") >= 8 and 'aria-invalid' in calculator and "Расчёт временно недоступен" in calculator, "Calculator must reject blank and invalid inputs")
+check(calculator.count("required>") >= 9 and 'aria-invalid' in calculator and "Расчёт временно недоступен" in calculator, "Calculator must reject blank and invalid inputs")
+check('id="mode"' in calculator and 'option value="bike"' in calculator and 'mode==="car"' in calculator, "Calculator must support car and bicycle modes")
+check('id="month-estimate"' in calculator and "daily*30" in calculator, "Calculator monthly equivalent estimate missing")
 check('input[aria-invalid="true"]' in css_text, "Invalid calculator inputs must be visually highlighted")
 city_js = ROOT / "city.js"
 
@@ -35,6 +37,9 @@ h1_text = re.sub(r"<[^>]+>", " ", h1_match.group(1)) if h1_match else ""
 check("Работа курьером во ВкусВилл" in h1_text, "Homepage H1 must target the main courier-work search phrase")
 
 check('name="keywords"' in home, "Homepage is missing keyword meta")
+check("hero-intro" in home and "trust-strip" in home, "Homepage value proposition and trust summary missing")
+check('href="cities.html"' in home and 'href="earnings.html"' in home, "Homepage must link to city and earnings guides")
+check("fonts.googleapis.com" not in home and "fonts.googleapis.com" not in calculator, "External font stylesheet should not block rendering")
 check("не является официальным сайтом" in home.lower(), "Homepage disclaimer missing")
 check("https://vkusvill.ru/job/courier/" in home, "Official courier link missing")
 check("https://wa.me/79201461682" in home and "https://t.me/daaaggg1" in home, "Contact links missing")
@@ -45,7 +50,7 @@ check("ipapi.co" in privacy and "локальном хранилище" in priva
 check(city_js.is_file(), "Missing city.js")
 check((ROOT / "styles.css").is_file(), "Missing styles.css")
 check("scroll-padding-top:122px" in css_text, "Mobile anchor offset missing")
-for filename in ("guide.html", "auto.html", "bike.html", "calculator.html"):
+for filename in ("guide.html", "auto.html", "bike.html", "calculator.html", "cities.html", "earnings.html"):
     source = pages.get(filename, "")
     nav_match = re.search(r'<nav class="main-nav"[^>]*>(.*?)</nav>', source, re.S)
     check(bool(nav_match), f"{filename}: primary navigation missing")
@@ -200,7 +205,8 @@ if sitemap.is_file():
             "https://76kovka76-hub.github.io/kurier-start/bike.html",
             "https://76kovka76-hub.github.io/kurier-start/calculator.html",
         }
-        check(set(sitemap_urls) == expected_sitemap, "Sitemap must list exactly the five canonical indexable pages")
+        expected_sitemap.update({"https://76kovka76-hub.github.io/kurier-start/cities.html", "https://76kovka76-hub.github.io/kurier-start/earnings.html"})
+        check(set(sitemap_urls) == expected_sitemap, "Sitemap must list exactly the seven canonical indexable pages")
         check(len(sitemap_urls) == len(set(sitemap_urls)), "Sitemap contains duplicate URLs")
     except ET.ParseError as exc:
         check(False, f"Invalid sitemap.xml: {exc}")
