@@ -43,7 +43,7 @@ check("hero-intro" in home and "trust-strip" in home, "Homepage value propositio
 check('href="cities.html"' in home and 'href="earnings.html"' in home, "Homepage must link to city and earnings guides")
 check("fonts.googleapis.com" not in home and "fonts.googleapis.com" not in calculator, "External font stylesheet should not block rendering")
 check("не является официальным сайтом" in home.lower(), "Homepage disclaimer missing")
-check("https://vkusvill.ru/job/courier/" in home, "Official courier link missing")
+check(all("href=\\"https://vkusvill.ru/" not in source for source in pages.values()) and "vkusvill.ru" not in city_js.read_text(encoding="utf-8"), "Unexpected outbound links to employer site")
 check("https://wa.me/79201461682" in home and "https://t.me/daaaggg1" in home, "Contact links missing")
 check("Узнай, где проверить<br>вакансии в своём городе" in home and "Контакт для связи по вопросам вакансий. Это не официальная служба поддержки ВкусВилл." in home, "Homepage must clearly distinguish independent contact from official hiring")
 check("<form" not in home.lower(), "Unexpected data-collection form in homepage")
