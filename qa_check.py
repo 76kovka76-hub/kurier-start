@@ -34,6 +34,10 @@ check("не предусмотрены анкеты" in privacy.lower(), "Privac
 check("ipapi.co" in privacy and "локальном хранилище" in privacy.lower(), "City-detection privacy notice missing")
 check(city_js.is_file(), "Missing city.js")
 check((ROOT / "styles.css").is_file(), "Missing styles.css")
+css_text = (ROOT / "styles.css").read_text(encoding="utf-8")
+check("scroll-padding-top:122px" in css_text, "Mobile anchor offset missing")
+check("scrollbar-width:thin" in css_text and "scroll-snap-type:x proximity" in css_text, "Mobile navigation scroll affordance missing")
+check("@media(prefers-reduced-motion:reduce)" in css_text and "scroll-behavior:auto" in css_text, "Reduced-motion support missing")
 check("@import url('https://fonts.googleapis.com'" not in (ROOT / "styles.css").read_text(encoding="utf-8"), "Google Font import must not be late in CSS")
 for filename, source in pages.items():
     check('href="https://fonts.googleapis.com/css2?family=Manrope:' in source, f"{filename}: Manrope font stylesheet missing from head")
