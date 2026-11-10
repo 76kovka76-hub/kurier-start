@@ -47,6 +47,8 @@ for filename, source in pages.items():
 if city_js.is_file():
     js = city_js.read_text(encoding="utf-8")
     check("https://ipapi.co/json/" in js, "IP city lookup missing")
+    check("AbortController()" in js and "clearTimeout(timeoutId)" in js and "6000" in js, "IP city lookup must have a six-second timeout")
+    check('if (!city) throw new Error("City unavailable")' in js, "IP lookup must not treat region-only data as a city")
     check("kurierStartCity" in js, "Manual city persistence missing")
     check("city-personal-text" in js, "City-specific page content missing")
     check('aria-live="polite"' in js and 'aria-atomic="true"' in js, "City changes must be announced to assistive technology")
