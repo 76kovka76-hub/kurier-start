@@ -304,3 +304,53 @@ a{ text-underline-offset:3px;text-decoration-thickness:1px}
 .skip-link{position:fixed;left:16px;top:10px;z-index:1000;padding:11px 15px;background:#14543b;color:#fff;border-radius:8px;font-weight:750;text-decoration:none;transform:translateY(-160%);transition:transform .18s ease}
 .skip-link:focus{transform:translateY(0);outline:3px solid #f0c75e;outline-offset:3px}
 #main-content,#top{scroll-margin-top:88px}
+
+
+/* Compact layout: reduce excessive vertical gaps between content blocks. */
+.page{padding-top:24px!important;padding-bottom:34px!important}
+.page>.hero-lead{margin-top:10px!important;margin-bottom:16px!important}
+.page>section.direction-card{margin:12px 0!important;padding:19px 21px!important}
+.page>section.info-band{margin-top:16px!important;margin-bottom:28px!important;padding:23px 25px!important}
+.page>section:not(.direction-card):not(.info-band){padding-top:15px!important;padding-bottom:6px!important}
+.page>section:not(.direction-card):not(.info-band) h2{margin:0 0 10px}
+.page>section:not(.direction-card):not(.info-band) p{margin:8px 0}
+.page>.calc-card{padding:21px!important}
+.page>.calc-card .calc-result{margin-top:16px}
+.quick-facts{margin-bottom:44px}
+.content-section{padding-bottom:48px}
+.section-heading{margin-bottom:19px}
+.direction-grid{gap:13px}
+.direction-card{padding:19px;min-height:215px}
+.info-band{padding:25px 28px;gap:38px;margin-bottom:42px}
+.info-list{gap:11px}
+.info-list>div{padding-bottom:10px}
+.faq-section{padding-bottom:42px}
+.faq-list details{padding:13px 4px}
+.bottom-cta{padding:24px 28px;margin-bottom:32px}
+@media(max-width:800px){
+ .hero{padding:42px 0 32px}
+ .quick-facts{margin-bottom:38px}
+ .info-band{padding:22px;gap:22px;margin-bottom:34px}
+}
+@media(max-width:620px){
+ .page{padding-top:20px!important;padding-bottom:25px!important}
+ .page>.hero-lead{margin-top:8px!important;margin-bottom:13px!important}
+ .page>section.direction-card{margin:9px 0!important;padding:15px 16px!important}
+ .page>section.info-band{margin-top:12px!important;margin-bottom:22px!important;padding:17px 15px!important}
+ .page>section:not(.direction-card):not(.info-band){padding-top:10px!important;padding-bottom:3px!important}
+ .page>.calc-card{padding:16px!important}
+ .hero{padding:29px 0 22px;gap:19px}
+ .hero-actions{margin-top:15px}
+ .hero-note{margin-top:13px}
+ .quick-facts{margin-bottom:29px;padding:12px;gap:10px}
+ .content-section{padding-bottom:29px}
+ .section-heading{gap:7px;margin-bottom:12px}
+ .direction-grid{gap:8px}
+ .direction-card{padding:14px}
+ .info-band{padding:17px 15px;gap:13px;margin-bottom:26px}
+ .info-list{gap:8px}
+ .info-list>div{padding-bottom:8px}
+ .faq-section{padding-bottom:27px}
+ .faq-list details{padding:11px 2px}
+ .bottom-cta{padding:18px;margin-bottom:23px}
+}
