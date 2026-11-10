@@ -29,25 +29,32 @@
     const bar = document.createElement("section");
     bar.className = "city-bar";
     bar.setAttribute("aria-label", "Ваш город");
-    bar.innerHTML = '<div class="city-bar-copy"><span class="city-bar-label">ВАШ ГОРОД</span><strong id="visitor-city">Город не выбран</strong><small id="city-note">При желании укажите его вручную</small></div><button type="button" class="city-change" id="city-change">Изменить город</button><form class="city-edit" id="city-edit" hidden><label for="city-input">Укажите город</label><input id="city-input" name="city" maxlength="70" placeholder="Например, Казань" required><button type="submit">Сохранить</button></form>';
+    bar.innerHTML = '<div class="city-bar-copy"><span class="city-bar-label">ВАШ ГОРОД</span><strong id="visitor-city" aria-live="polite" aria-atomic="true">Город не выбран</strong><small id="city-note">При желании укажите его вручную</small></div><button type="button" class="city-change" id="city-change" aria-expanded="false" aria-controls="city-edit">Изменить город</button><form class="city-edit" id="city-edit" aria-label="Выбор города" hidden><label for="city-input">Укажите город</label><input id="city-input" name="city" maxlength="70" placeholder="Например, Казань" required><button type="submit">Сохранить</button></form>';
     const header = document.querySelector(".site-header");
     if (header) header.insertAdjacentElement("afterend", bar);
     else main.insertAdjacentElement("beforebegin", bar);
     const localCard = document.createElement("aside");
     localCard.className = "city-personal";
     localCard.hidden = true;
-    localCard.innerHTML = '<strong id="city-personal-title">Информация для вашего города</strong><p id="city-personal-text">Уточняем региональные условия. Можно изменить город вручную.</p><a href="https://vkusvill.ru/job/courier/" target="_blank" rel="noopener noreferrer">Проверить официальные вакансии ↗</a>';
+    localCard.innerHTML = '<strong id="city-personal-title" aria-live="polite" aria-atomic="true">Информация для вашего города</strong><p id="city-personal-text">Уточняем региональные условия. Можно изменить город вручную.</p><a href="https://vkusvill.ru/job/courier/" target="_blank" rel="noopener noreferrer">Проверить официальные вакансии ↗</a>';
     bar.insertAdjacentElement("afterend", localCard);
     const edit = document.getElementById("city-edit");
-    document.getElementById("city-change").addEventListener("click", () => {
+    const changeButton = document.getElementById("city-change");
+    const cityInput = document.getElementById("city-input");
+    changeButton.addEventListener("click", () => {
       edit.hidden = !edit.hidden;
-      if (!edit.hidden) document.getElementById("city-input").focus();
+      changeButton.setAttribute("aria-expanded", String(!edit.hidden));
+      if (!edit.hidden) cityInput.focus();
     });
     edit.addEventListener("submit", (event) => {
       event.preventDefault();
       const city = clean(document.getElementById("city-input").value);
       if (!city) return;
-      save(city); updateCity(city, "manual"); edit.hidden = true;
+      save(city);
+      updateCity(city, "manual");
+      edit.hidden = true;
+      changeButton.setAttribute("aria-expanded", "false");
+      changeButton.focus();
     });
     const saved = getSaved();
     if (saved) { updateCity(saved, "manual"); return; }
