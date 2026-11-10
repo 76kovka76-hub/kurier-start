@@ -27,6 +27,8 @@ check('id="calc-status"' in calculator and "Расходы превышают в
 check(calculator.count("required>") >= 9 and 'aria-invalid' in calculator and "Расчёт временно недоступен" in calculator, "Calculator must reject blank and invalid inputs")
 check('id="mode"' in calculator and 'option value="bike"' in calculator and 'mode==="car"' in calculator, "Calculator must support car and bicycle modes")
 check('id="month-estimate"' in calculator and "daily*30" in calculator and "monthEstimate].every(Number.isFinite)" in calculator, "Calculator monthly equivalent estimate missing or unguarded")
+check(r"\\\\n" not in calculator, "Calculator script contains a literal escaped newline")
+check(calculator.count("const daily=net/v.days;") == 1, "Calculator daily estimate must be declared exactly once")
 check('input[aria-invalid="true"]' in css_text, "Invalid calculator inputs must be visually highlighted")
 city_js = ROOT / "city.js"
 
@@ -151,7 +153,7 @@ for filename, source in pages.items():
 
         check('rel="canonical"' in source, f"{filename}: canonical missing")
         check('property="og:url"' in source, f"{filename}: Open Graph URL missing")
-        if filename in ("guide.html", "auto.html", "bike.html", "calculator.html"):
+        if filename in ("guide.html", "auto.html", "bike.html", "calculator.html", "cities.html", "earnings.html"):
             check('"@type": "BreadcrumbList"' in source and '"itemListElement"' in source, f"{filename}: breadcrumb structured data missing")
         check('name="twitter:card"' in source and 'name="twitter:title"' in source and 'name="twitter:description"' in source, f"{filename}: social preview metadata incomplete")
     check('src="city.js' in source, f"{filename}: city.js not included")
