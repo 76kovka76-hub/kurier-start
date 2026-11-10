@@ -34,6 +34,10 @@ check("не предусмотрены анкеты" in privacy.lower(), "Privac
 check("ipapi.co" in privacy and "локальном хранилище" in privacy.lower(), "City-detection privacy notice missing")
 check(city_js.is_file(), "Missing city.js")
 check((ROOT / "styles.css").is_file(), "Missing styles.css")
+check("@import url('https://fonts.googleapis.com'" not in (ROOT / "styles.css").read_text(encoding="utf-8"), "Google Font import must not be late in CSS")
+for filename, source in pages.items():
+    check('href="https://fonts.googleapis.com/css2?family=Manrope:' in source, f"{filename}: Manrope font stylesheet missing from head")
+    check('rel="preconnect" href="https://fonts.googleapis.com"' in source and 'rel="preconnect" href="https://fonts.gstatic.com" crossorigin' in source, f"{filename}: Google Fonts preconnect missing")
 
 if city_js.is_file():
     js = city_js.read_text(encoding="utf-8")
