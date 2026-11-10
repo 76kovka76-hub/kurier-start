@@ -270,6 +270,7 @@ a{ text-underline-offset:3px;text-decoration-thickness:1px}
 .calc-field label{font-family:"Manrope",sans-serif;font-weight:800;letter-spacing:-.02em}
 .calc-field input{font-family:"Manrope",sans-serif;border-radius:11px!important;padding:13px!important;background:#fbfdfb!important}
 .calc-field input:focus{outline:3px solid #d8eadb;border-color:#8bb997}
+.calc-field input[aria-invalid="true"]{border-color:#b64235;background:#fff8f6}
 .calc-result{border-radius:16px!important;background:linear-gradient(135deg,#eaf4eb,#f4f8f3)!important}
 .calc-note{line-height:1.75}
 @media(max-width:620px){
