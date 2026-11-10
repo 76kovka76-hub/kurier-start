@@ -16,10 +16,10 @@
     const localTitle = document.getElementById("city-personal-title");
     if (localTitle) localTitle.textContent = "Информация для " + city;
     const localText = document.getElementById("city-personal-text");
-    if (localText) localText.textContent = "Проверьте, доступен ли набор курьеров в " + city + ", и уточните актуальные требования, график и выплаты до начала работы. Наличие вакансий и условия могут отличаться даже внутри одного региона.";
+    if (localText) localText.textContent = "Проверьте актуальные вакансии курьеров в городе " + city + " на официальной странице ВкусВилл. Наличие вакансий и условия могут меняться. Контакт на этом сайте независимый и не подтверждает трудоустройство.";
     document.querySelectorAll("[data-city-text]").forEach((node) => { node.textContent = city; });
     document.querySelectorAll('a[href*="wa.me/79201461682"]').forEach((link) => {
-      const message = "Здравствуйте! Я из города " + city + ". Подскажите, пожалуйста, актуальные условия и наличие набора курьеров.";
+      const message = "Здравствуйте! Я из города " + city + ". Подскажите, пожалуйста, где проверить актуальные вакансии курьеров и официальные условия?";
       link.href = "https://wa.me/79201461682?text=" + encodeURIComponent(message);
     });
   };
