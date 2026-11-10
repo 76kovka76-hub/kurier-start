@@ -112,9 +112,9 @@
   const serviceCost=v.distance*v.service;
   const total=fuelCost+serviceCost+v.other+v.tax;
   const net=v.income-total;
-  const hourlyNet=v.hours>0?net/v.hours:null;
+  const hourlyNet=v.hours>0?net/v.hours:null;\n  const daily=net/v.days;\n  const monthEstimate=daily*30;
   const result=document.querySelector(".calc-result");
-  if(![fuelCost,serviceCost,total,net].every(Number.isFinite) || (hourlyNet!==null && !Number.isFinite(hourlyNet))){
+  if(![fuelCost,serviceCost,total,net,daily,monthEstimate].every(Number.isFinite) || (hourlyNet!==null && !Number.isFinite(hourlyNet))){
    result.classList.remove("is-negative");
    document.getElementById("net").textContent="—";
    document.getElementById("hourly").textContent="Уменьши слишком большие значения и повтори расчёт.";
@@ -129,7 +129,7 @@
   document.getElementById("detail").textContent=(mode==="car"?"Топливо: "+fmt.format(fuelCost)+" ₽ · ":"Топливо не учитывается для велосипеда · ")+"обслуживание: "+fmt.format(serviceCost)+" ₽ · прочие расходы и отчисления: "+fmt.format(v.other+v.tax)+" ₽ · всего расходов: "+fmt.format(total)+" ₽";
   const daily=net/v.days;
   document.getElementById("period-average").textContent="Средний остаток за рабочий день: "+fmt.format(daily)+" ₽";
-  document.getElementById("month-estimate").textContent="Условный эквивалент за 30 календарных дней при таком среднем темпе: "+fmt.format(daily*30)+" ₽. Это математическая оценка, не прогноз и не обещание загрузки.";
+  document.getElementById("month-estimate").textContent="Условный эквивалент за 30 календарных дней при таком среднем темпе: "+fmt.format(monthEstimate)+" ₽. Это математическая оценка, не прогноз и не обещание загрузки.";
  }
  ids.forEach(id=>document.getElementById(id).addEventListener("input",update));document.getElementById("mode").addEventListener("change",update);update();
 })();
