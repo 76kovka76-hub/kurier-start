@@ -218,7 +218,7 @@ input,select,textarea{border-radius:10px}
 
 
 /* Typography and editorial polish */
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap');
+
 :root{
  --green:#176b48;
  --green-dark:#104b35;
