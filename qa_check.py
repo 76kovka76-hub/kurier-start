@@ -20,6 +20,7 @@ privacy = pages.get("privacy.html", "")
 calculator = pages.get("calculator.html", "")
 check('id="hours"' in calculator and 'id="hourly"' in calculator, "Calculator hourly estimate fields missing")
 check("net/v.hours" in calculator, "Calculator hourly net calculation missing")
+check('id="calc-status"' in calculator and "Расходы превышают выплаты" in calculator, "Calculator negative-balance warning missing")
 city_js = ROOT / "city.js"
 
 check("<h1" in home.lower(), "Homepage is missing H1")
