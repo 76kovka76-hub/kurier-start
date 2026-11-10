@@ -299,3 +299,8 @@ a{ text-underline-offset:3px;text-decoration-thickness:1px}
  outline-offset:3px;
  border-radius:5px;
 }
+
+/* Keyboard accessibility: bypass repeated navigation. */
+.skip-link{position:fixed;left:16px;top:10px;z-index:1000;padding:11px 15px;background:#14543b;color:#fff;border-radius:8px;font-weight:750;text-decoration:none;transform:translateY(-160%);transition:transform .18s ease}
+.skip-link:focus{transform:translateY(0);outline:3px solid #f0c75e;outline-offset:3px}
+#main-content,#top{scroll-margin-top:88px}
