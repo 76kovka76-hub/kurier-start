@@ -215,3 +215,71 @@ input,select,textarea{border-radius:10px}
  .city-bar,.city-personal{border-radius:12px}
 }
 @media(hover:none){.direction-card:hover,.contact-action:hover{transform:none}}
+
+
+/* Typography and editorial polish */
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap');
+:root{
+ --green:#176b48;
+ --green-dark:#104b35;
+ --ink:#18251e;
+ --muted:#68766d;
+ --line:#e2e9e2;
+ --paper:#f6f8f5;
+ --soft:#edf4ed;
+}
+html{font-family:"Manrope",sans-serif}
+body{font-family:"Manrope",sans-serif;font-size:15px;line-height:1.72;letter-spacing:-.012em}
+button,input,select,textarea{font:inherit}
+h1,h2,h3,h4,strong,b{font-family:"Manrope",sans-serif}
+h1,h2,h3{color:#17251d;font-weight:800}
+h1{letter-spacing:-.055em}
+h2{letter-spacing:-.045em}
+h3{letter-spacing:-.035em}
+p{letter-spacing:-.012em}
+a{ text-underline-offset:3px;text-decoration-thickness:1px}
+::selection{background:#cfe5d3;color:#104b35}
+.hero h1{font-weight:800;letter-spacing:-.065em;line-height:1.015}
+.hero h1 em,h1 em,h2 em{font-style:normal;font-weight:600;letter-spacing:-.065em}
+.eyebrow{font-size:9px;letter-spacing:.19em;font-weight:800}
+.hero-lead{font-size:15px;line-height:1.85;letter-spacing:-.018em}
+.section-heading h2,.faq-section h2,.info-title h2{font-weight:800;letter-spacing:-.06em;line-height:1.08}
+.direction-card h3{font-weight:800}
+.direction-card p,.info-list p,.faq-list details p{letter-spacing:-.01em}
+.button{font-family:"Manrope",sans-serif;font-weight:800;letter-spacing:-.015em}
+.contact-action strong{font-weight:800;letter-spacing:-.025em}
+.panel-label,.contact-action small,.card-tag{letter-spacing:.16em}
+.main-nav a,.header-contact{font-weight:700;letter-spacing:-.015em}
+.brand{font-weight:800;letter-spacing:.13em}
+.site-footer{font-size:13px}
+.footer-links a{font-weight:600}
+.disclaimer{letter-spacing:0;line-height:1.85}
+.city-bar-copy strong,.city-personal strong{font-weight:800;letter-spacing:-.025em}
+/* Article pages */
+.page>h1{font-weight:800;letter-spacing:-.06em;line-height:1.08}
+.page>h1 em{font-style:normal;color:var(--green);font-weight:600}
+.page>.hero-lead{max-width:760px;margin-top:16px;margin-bottom:25px}
+.page>.direction-card{background:rgba(255,255,255,.94);border-radius:18px;padding:25px 27px;box-shadow:0 7px 24px rgba(23,58,35,.045);border-color:#e4ebe4}
+.page>.direction-card h2{font-size:21px;font-weight:800;letter-spacing:-.045em;line-height:1.25}
+.page>.direction-card p{font-size:14px;line-height:1.85;color:#58675d}
+.page>section:not(.direction-card):not(.info-band){font-size:14px;line-height:1.85}
+.page>section:not(.direction-card):not(.info-band) h2{font-size:25px;letter-spacing:-.05em}
+.page a:not(.button){color:var(--green-dark);font-weight:700}
+.page a:not(.button):hover{text-decoration-thickness:2px}
+.calc-card{border:1px solid #e3ebe3!important;border-radius:20px!important;padding:26px!important;box-shadow:0 12px 34px rgba(23,58,35,.06)}
+.calc-field label{font-family:"Manrope",sans-serif;font-weight:800;letter-spacing:-.02em}
+.calc-field input{font-family:"Manrope",sans-serif;border-radius:11px!important;padding:13px!important;background:#fbfdfb!important}
+.calc-field input:focus{outline:3px solid #d8eadb;border-color:#8bb997}
+.calc-result{border-radius:16px!important;background:linear-gradient(135deg,#eaf4eb,#f4f8f3)!important}
+.calc-note{line-height:1.75}
+@media(max-width:620px){
+ body{font-size:14px;line-height:1.7}
+ .hero h1{letter-spacing:-.06em}
+ .page>.direction-card{padding:19px 18px}
+ .page>.direction-card h2{font-size:19px}
+ .page>.direction-card p{font-size:13px}
+ .calc-card{padding:18px!important}
+}
+@media(prefers-reduced-motion:no-preference){
+ .button,.header-contact,.direction-card,.contact-action{transition:transform .2s ease,box-shadow .2s ease,background .2s ease,border-color .2s ease}
+}
