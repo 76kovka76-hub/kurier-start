@@ -49,6 +49,8 @@ for filename in ("guide.html", "auto.html", "bike.html", "calculator.html"):
     source = pages.get(filename, "")
     nav_match = re.search(r'<nav class="main-nav"[^>]*>(.*?)</nav>', source, re.S)
     check(bool(nav_match), f"{filename}: primary navigation missing")
+    breadcrumb = re.search(r'<nav class="breadcrumbs" aria-label="Хлебные крошки">(.*?)</nav>', source, re.S)
+    check(bool(breadcrumb) and 'href="index.html"' in breadcrumb.group(1) and 'aria-current="page"' in breadcrumb.group(1), f"{filename}: visible breadcrumb navigation missing or incomplete")
     if nav_match:
         nav = nav_match.group(1)
         for target in ("index.html#directions", "guide.html", "auto.html", "bike.html", "calculator.html"):
