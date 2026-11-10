@@ -12,7 +12,7 @@ def check(condition, message):
     if not condition:
         errors.append(message)
 
-html_files = sorted(ROOT.glob("*.html"))
+html_files = sorted(p for p in ROOT.glob("*.html") if not re.match(r"^(?:google|yandex)_.*\.html$", p.name))
 check(bool(html_files), "No HTML pages found")
 pages = {p.name: p.read_text(encoding="utf-8") for p in html_files}
 home = pages.get("index.html", "")
