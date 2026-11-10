@@ -46,21 +46,21 @@
 <h1 style="font-size:clamp(34px,5vw,48px);line-height:1.12;letter-spacing:-1.8px;margin:14px 0">Калькулятор дохода <em>автокурьера</em></h1>
 <p class="hero-lead">Введи свои предполагаемые выплаты и расходы, чтобы оценить, сколько может остаться после затрат на автомобиль. Все вычисления выполняются прямо в браузере — данные никуда не отправляются.</p>
 <div class="calc-card">
-<h2 style="margin-top:0">Твои данные за выбранный период</h2>
+<h2 style="margin-top:0">Введи данные за выбранный период</h2>
 <div class="calc-grid">
 <div class="calc-field"><label for="income">Ожидаемые выплаты за период, ₽</label><input id="income" type="number" min="0" step="100" value="80000" required></div>
-<div class="calc-field"><label for="hours">Часы работы за этот период</label><input id="hours" type="number" min="0" step="1" value="160" required></div>
+<div class="calc-field"><label for="hours">Количество часов работы за период</label><input id="hours" type="number" min="0" step="1" value="160" required></div>
 <div class="calc-field"><label for="distance">Пробег по работе, км</label><input id="distance" type="number" min="0" step="10" value="1500" required></div>
 <div class="calc-field"><label for="consumption">Расход топлива, л на 100 км</label><input id="consumption" type="number" min="0" step=".1" value="9" required></div>
 <div class="calc-field"><label for="fuel">Цена топлива, ₽/л</label><input id="fuel" type="number" min="0" step=".1" value="60" required></div>
-<div class="calc-field"><label for="service">Резерв на обслуживание, ₽/км</label><input id="service" type="number" min="0" step=".1" value="3" required></div>
+<div class="calc-field"><label for="service">Расходы на обслуживание и износ, ₽/км</label><input id="service" type="number" min="0" step=".1" value="3" required></div>
 <div class="calc-field"><label for="other">Парковка, связь и прочие расходы, ₽</label><input id="other" type="number" min="0" step="100" value="2000" required></div>
 <div class="calc-field"><label for="tax">Налоги и прочие отчисления, ₽</label><input id="tax" type="number" min="0" step="100" value="0" required></div>
 </div>
-<div class="calc-result" aria-live="polite"><span>Ориентировочно останется</span><strong id="net">—</strong><p id="hourly" class="calc-note" style="font-weight:700"></p><p id="calc-status" class="calc-status" role="status"></p><p id="detail" class="calc-note"></p></div>
+<div class="calc-result" aria-live="polite"><span>Примерный остаток после указанных расходов</span><strong id="net">—</strong><p id="hourly" class="calc-note" style="font-weight:700"></p><p id="calc-status" class="calc-status" role="status"></p><p id="detail" class="calc-note"></p></div>
 <p class="calc-note">Это упрощённая оценка, а не прогноз или гарантия заработка. Укажи свои реальные цифры. Не забудь учитывать амортизацию, страховку, мойку, платные дороги, простой и другие расходы, если они применимы.</p>
 </div>
-<section class="direction-card" style="margin:20px 0;min-height:0"><h2 style="margin:0 0 8px">Как пользоваться расчётом</h2><p>Выплаты — сумма до вычета указанных расходов. Пробег — километры именно по работе. Расход топлива возьми из реальных наблюдений за своим автомобилем. Резерв на обслуживание поможет учесть масло, шины, тормоза и износ.</p><p>Сравнивай результат за одинаковый период и уточняй у работодателя или партнёра, какие расходы компенсируются отдельно.</p></section>
+<section class="direction-card" style="margin:20px 0;min-height:0"><h2 style="margin:0 0 8px">Как пользоваться расчётом</h2><p>В поле «Выплаты» укажи сумму до вычета расходов. В поле «Пробег» — километры, пройденные по работе. Расход топлива возьми из реальных наблюдений за своим автомобилем. Расходы на обслуживание и износ оцени с учётом замены масла, шин, тормозов и других деталей.</p><p>Сравнивай результаты за одинаковые периоды. Уточни у работодателя или партнёра, какие расходы возмещаются отдельно.</p></section>
 <h2>Другие материалы</h2><p><a href="auto.html">Работа автокурьером: расходы и условия</a></p><p><a href="guide.html">Как стать курьером: пошаговая памятка</a></p><p><a href="bike.html">Памятка для велокурьеров</a></p><p><a href="index.html">На главную</a></p>
 </main>
 <footer class="site-footer"><p class="disclaimer">Независимая информационная площадка. Не является официальным сайтом или представительством ВкусВилл.</p></footer>
@@ -99,7 +99,7 @@
   result.classList.toggle("is-negative",net<0);
   document.getElementById("net").textContent=fmt.format(net)+" ₽";
   document.getElementById("calc-status").textContent=net<0?"Расходы превышают выплаты на "+fmt.format(Math.abs(net))+" ₽. Проверь введённые суммы.":"Расходы учтены. Это ориентировочный остаток до неуказанных затрат.";
-  document.getElementById("hourly").textContent=v.hours>0?"Примерно "+fmt.format(hourlyNet)+" ₽ чистыми за час":"Укажи количество часов, чтобы рассчитать доход за час.";
+  document.getElementById("hourly").textContent=v.hours>0?"Примерно "+fmt.format(hourlyNet)+" ₽ за час после указанных расходов":"Укажи количество отработанных часов, чтобы рассчитать сумму за час.";
   document.getElementById("detail").textContent="Топливо: "+fmt.format(fuelCost)+" ₽ · обслуживание: "+fmt.format(serviceCost)+" ₽ · прочие расходы и отчисления: "+fmt.format(v.other+v.tax)+" ₽ · всего расходов: "+fmt.format(total)+" ₽";
  }
  ids.forEach(id=>document.getElementById(id).addEventListener("input",update));update();
