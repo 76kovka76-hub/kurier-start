@@ -11,6 +11,10 @@
     if (value) value.textContent = city;
     const note = document.getElementById("city-note");
     if (note) note.textContent = source === "manual" ? "Город выбран вами" : "Город определён приблизительно по IP";
+    const localTitle = document.getElementById("city-personal-title");
+    if (localTitle) localTitle.textContent = "Информация для " + city;
+    const localText = document.getElementById("city-personal-text");
+    if (localText) localText.textContent = "Проверьте, доступен ли набор курьеров в " + city + ", и уточните актуальные требования, график и выплаты до начала работы. Наличие вакансий и условия могут отличаться даже внутри одного региона.";
     document.querySelectorAll("[data-city-text]").forEach((node) => { node.textContent = city; });
     document.querySelectorAll('a[href*="wa.me/79201461682"]').forEach((link) => {
       const message = "Здравствуйте! Я из города " + city + ". Подскажите, пожалуйста, актуальные условия и наличие набора курьеров.";
@@ -27,6 +31,10 @@
     const header = document.querySelector(".site-header");
     if (header) header.insertAdjacentElement("afterend", bar);
     else main.insertAdjacentElement("beforebegin", bar);
+    const localCard = document.createElement("aside");
+    localCard.className = "city-personal";
+    localCard.innerHTML = '<strong id="city-personal-title">Информация для вашего города</strong><p id="city-personal-text">Уточняем региональные условия. Можно изменить город вручную.</p><a href="https://vkusvill.ru/job/courier/" target="_blank" rel="noopener noreferrer">Проверить официальные вакансии ↗</a>';
+    bar.insertAdjacentElement("afterend", localCard);
     const edit = document.getElementById("city-edit");
     document.getElementById("city-change").addEventListener("click", () => {
       edit.hidden = !edit.hidden;
